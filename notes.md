@@ -1,4 +1,4 @@
-# CS 260 Notes
+# CS 260 Notes Fall 2025 Neve Callaway
 
 [My startup - Simon](https://simon.cs260.click)
 
