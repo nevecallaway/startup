@@ -43,20 +43,26 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Public portfolio gallery showcasing completed artwork and different artistic styles (accessible without login)
+- Secure user authentication system for commission management and tracking
+- Commission request form with photo upload and detailed specification options (login required)
+- Real-time progress tracking with status updates via WebSocket
+- Client dashboard for managing commission history and ongoing projects
+- Direct messaging system for client-artist communication throughout the creative process
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Uses correct HTML structure for application. Multiple pages with hyperlinks to navigate between sections, including: 
+    - Public page: Portfolio gallery, about page
+    - Login page: Authentication
+    - Protected pages: Commission request form, client dashboard
+- **CSS** - Application styling that is visually appealing across different devices. Implements artistic yet minimalistic design that utilizes principles of adequate whitespace, pleasing color choice, and visual simplicity while still maintaining individuality. Gallery-style grid layout for portfolio display.
+- **React** - Provides portfolio browsing, login, commission submission, progress tracking, messaging, and backend endpoint calls. Single page application with component views that is reactive to user actions.
+- **Service** - Backend service with endpoints for managing commissions, file uploads, and progress updates.
+- **DB/Login** - Store client authentication, commission details, and project history in database. Secure login required for commission management.
+- **WebSocket** - Real-time updates when commission status changes and new messages are received.
 
 ## 🚀 AWS deliverable
 
