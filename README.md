@@ -32,13 +32,46 @@ Step through the Portrait Portal, where memories become magic. They say a pictur
 
 ![Design image](placeholder.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The application features a gallery-style interface where potential clients can browse the portfolio without registration. Once interested, clients create accounts to submit commission requests with detailed specifications and reference photos. The platform provides real-time progress tracking and direct communication throughout the creative process.
 
 ```mermaid
 sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
+    participant C as Client
+    participant PP as Portrait Portal
+    participant DB as Database
+    participant A as Artist
+    participant WS as WebSocket
+    
+    C->>PP: Browse public portfolio gallery
+    PP->>DB: Fetch portfolio images
+    DB-->>PP: Return portfolio data
+    PP-->>C: Display artwork gallery
+    
+    C->>PP: Register/Login
+    PP->>DB: Store/verify credentials
+    DB-->>PP: Authentication success
+    PP-->>C: Access granted to protected features
+    
+    C->>PP: Submit commission request (photos + specs)
+    PP->>DB: Store commission details
+    DB-->>PP: Commission saved
+    PP->>WS: Notify artist of new request
+    WS-->>A: New commission notification
+    
+    A->>PP: Update commission progress
+    PP->>DB: Store progress update
+    PP->>WS: Broadcast progress update
+    WS-->>C: Real-time progress notification
+    
+    C->>PP: Send message to artist
+    PP->>DB: Store message
+    PP->>WS: Send message notification
+    WS-->>A: New message alert
+    
+    A->>PP: Upload final artwork
+    PP->>DB: Store completed commission
+    PP->>WS: Notify completion
+    WS-->>C: Commission completed notification
 ```
 
 ### Key features
