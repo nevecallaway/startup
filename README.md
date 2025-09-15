@@ -93,7 +93,7 @@ I am going to use the required technologies in the following ways.
     - Protected pages: Commission request form, client dashboard
 - **CSS** - Application styling that is visually appealing across different devices. Implements artistic yet minimalistic design that utilizes principles of adequate whitespace, pleasing color choice, and visual simplicity while still maintaining individuality. Gallery-style grid layout for portfolio display.
 - **React** - Provides portfolio browsing, login, commission submission, progress tracking, messaging, and backend endpoint calls. Single page application with component views that is reactive to user actions.
-- **Service** - Backend service with endpoints for managing commissions, file uploads, and progress updates.
+- **Service** - Backend service with endpoints for managing commissions, file uploads, and progress updates. Includes user authentication (login/logout/register), commission management, and integration with a third-party color palette API to help clients visualize potential color schemes for their custom portraits.
 - **DB/Login** - Store client authentication, commission details, and project history in database. Secure login required for commission management.
 - **WebSocket** - Real-time updates when commission status changes and new messages are received.
 
