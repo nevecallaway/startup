@@ -18,11 +18,11 @@ Portrait Portal is a web-based commission management platform that connects clie
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
+- [x] Proper use of Markdown
 - [x] A concise and compelling elevator pitch
 - [x] Description of key features
 - [x] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
@@ -30,7 +30,7 @@ Step through the Portrait Portal, where memories become magic. They say a pictur
 
 ### Design
 
-![Design image](placeholder.png)
+![rough_sketch](https://github.com/user-attachments/assets/c7ec9aab-a473-44ad-b9ab-fcc8919a486c)
 
 The application features a gallery-style interface where potential clients can browse the portfolio without registration. Once interested, clients create accounts to submit commission requests with detailed specifications and reference photos. The platform provides real-time progress tracking and direct communication throughout the creative process.
 
