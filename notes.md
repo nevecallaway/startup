@@ -10,12 +10,12 @@
 
 ## AWS
 
-My IP address is: 54.81.96.130
-Launching my AMI I initially put it on a private subnet. Even though it had a public IP address and the security group was right, I wasn't able to connect to it.
+My IP address is: 98.89.159.49
+I had an issue where my instance did not properly clone the course AWI, but once I tried to ssh into my server and saw that ls yielded no content, that helped me realize my issue.
 
 ## Caddy
 
-No problems worked just like it said in the [instruction](https://github.com/webprogramming260/.github/blob/main/profile/webServers/https/https.md).
+Successfully obtained domain name and redirected traffic to my server. I encountered no issues changing the Caddy file and then creating a subdomain wildcard ('*.portraitportal.me'),
 
 ## HTML
 
