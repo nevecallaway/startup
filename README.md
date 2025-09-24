@@ -101,7 +101,9 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://startup.portraitportal.me).
+
+Copied CS 260 API and created my own instance using that template. Got my server up on an IP address, then redirected traffic under my domain name to that IP address (98.89.159.49). I then updated the Caddy file to be able to access securely through https:// rather than just http://.
 
 ## 🚀 HTML deliverable
 
