@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Tell browsers not to scale the viewport automatically -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Portrait Portal</title>
+    <link rel="icon" href="favicon.ico" />
+  </head>
+  <body>
+    <!-- Use header, main, and footer elements to give semantic structure -->
+    <header>
+      <h1>Portrait Portal</h1>
+
+      <!-- Navigation elements -->
+      <nav>
+        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
+        <menu>
+          <!-- Public Pages -->
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          
+          <!-- Protected Pages (now accessible after login) -->
+          <li><a href="commission.html">Request Commission</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          
+          <!-- Logout -->
+          <li><a href="index.html">Logout</a></li>
+        </menu>
+      </nav>
+
+      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
+      <hr />
+    </header>
+
+    <main>
+      <!-- Welcome Section -->
+      <section>
+        <h2>Welcome back, [Client Name]!</h2>
+        <p>Manage your portrait commissions and track progress from your dashboard.</p>
+        <hr />
+      </section>
+
+      <!-- Quick Actions -->
+      <section>
+        <h2>Quick Actions</h2>
+        <button type="button" onclick="location.href='commission.html'">Request New Commission</button>
+        <button type="button" onclick="location.href='gallery.html'">Browse Gallery</button>
+        <button type="button" onclick="location.href='index.html'">Logout</button>
+        <hr />
+      </section>
+
+      <!-- Active Commissions -->
+      <section>
+        <h2>Active Commissions</h2>
+        
+        <!-- Commission 1 -->
+        <div>
+          <h3>Family Portrait</h3>
+          <p><strong>Status:</strong> In Progress - Sketching Phase</p>
+          <p><strong>Artist:</strong> Neve Callaway</p>
+          <p><strong>Submitted:</strong> October 15, 2024</p>
+          <p><strong>Estimated Completion:</strong> November 30, 2024</p>
+          <p><strong>Description:</strong> 16x20 family portrait with 4 family members, oil on canvas</p>
+          
+          <!-- Progress indicator -->
+          <p><strong>Progress:</strong></p>
+          <ul>
+            <li>✅ Order Received</li>
+            <li>✅ Initial Consultation</li>
+            <li>🎨 Sketching (Current)</li>
+            <li>⏳ Painting</li>
+            <li>⏳ Final Review</li>
+            <li>⏳ Shipping</li>
+          </ul>
+          
+          <button type="button" onclick="location.href='messages.html'">Message Artist</button>
+        </div>
+        <hr />
+
+        <!-- Commission 2 -->
+        <div>
+          <h3>Pet Portrait</h3>
+          <p><strong>Status:</strong> Awaiting Photo Approval</p>
+          <p><strong>Artist:</strong> Neve Callaway</p>
+          <p><strong>Submitted:</strong> October 22, 2024</p>
+          <p><strong>Estimated Completion:</strong> December 15, 2024</p>
+          <p><strong>Description:</strong> 12x16 pet portrait, watercolor</p>
+          
+          <!-- Action needed alert -->
+          <p><strong>Action Needed:</strong> Please review and approve the photo selection for your pet portrait.</p>
+          
+          <button type="button" onclick="location.href='messages.html'">Message Artist</button>
+        </div>
+        <button type="button" onclick="location.href='commission.html'">Request New Commission</button>
+        <hr />
+      </section>
+
+      <!-- Completed Commissions -->
+      <section>
+        <h2>Completed Commissions</h2>
+        
+        <div>
+          <h3>Wedding Portrait</h3>
+          <p><strong>Status:</strong>Completed & Delivered</p>
+          <p><strong>Completed:</strong> September 28, 2024</p>
+          <p><strong>Description:</strong> 20x24 wedding portrait, oil on canvas</p>
+        </div>
+        <button type="button" onclick="location.href='commission.html'">Request New Commission</button>
+        <hr />
+      </section>
+
+      <!-- Messages & Updates -->
+      <section>
+        <h2>Recent Messages</h2>
+        
+        <!-- Message preview -->
+        <div>
+          <p><strong>From Artist:</strong> "Hi! I've finished the initial sketch for your family portrait. Please check your commission details to review and approve."</p>
+          <p><small>2 hours ago</small></p>
+          <button type="button" onclick="location.href='messages.html'">View All Messages</button>
+        </div>
+        <hr />
+      </section>
+
+      <!-- Account Information -->
+      <section>
+        <h2>Account Summary</h2>
+        <p><strong>Total Commissions:</strong> 3</p>
+        <p><strong>Active Orders:</strong> 2</p>
+        <p><strong>Completed Orders:</strong> 1</p>
+        
+        <button type="button" onclick="location.href='profile.html'">Edit Profile</button>
+      </section>
+    </main>
+
+    <footer>
+      <hr />
+      <span>Creator: Neve Callaway</span>
+      <br />
+      <a href="https://github.com/nevecallaway/startup">GitHub</a>
+    </footer>
+  </body>
+</html>
