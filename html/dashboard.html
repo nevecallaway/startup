@@ -75,7 +75,27 @@
             <li>⏳ Shipping</li>
           </ul>
           
-          <button type="button" onclick="location.href='messages.html?commission=1'">Message Artist</button>
+          <!-- Messages for this commission -->
+          <div>
+            <h4>Recent Messages</h4>
+            <div>
+              <p><strong>Artist (2 hours ago):</strong> "Hi! I've finished the initial sketch. Please review the attached image and let me know if you'd like any adjustments."</p>
+            </div>
+            <div>
+              <p><strong>You (1 day ago):</strong> "Looking forward to seeing the progress!"</p>
+            </div>
+            <div>
+              <p><strong>Artist (3 days ago):</strong> "Starting work on your family portrait today. I'll send updates as I progress through each stage."</p>
+            </div>
+            
+            <!-- Message form -->
+            <form>
+              <label for="message1">Send Message:</label>
+              <textarea id="message1" name="message" placeholder="Type your message here..." rows="3" cols="50"></textarea>
+              <br>
+              <button type="submit">Send</button>
+            </form>
+          </div>
         </div>
         <hr />
 
@@ -87,11 +107,26 @@
           <p><strong>Submitted:</strong> October 22, 2024</p>
           <p><strong>Estimated Completion:</strong> December 15, 2024</p>
           <p><strong>Description:</strong> 12x16 pet portrait, watercolor</p>
+          <p><strong>Action Needed:</strong> Please review and approve the photo selection.</p>
           
-          <!-- Action needed alert -->
-          <p><strong>Action Needed:</strong> Please review and approve the photo selection for your pet portrait.</p>
-          
-          <button type="button" onclick="location.href='messages.html?commission=2'">Message Artist</button>
+          <!-- Messages for this commission -->
+          <div>
+            <h4>Recent Messages</h4>
+            <div>
+              <p><strong>Artist (6 hours ago):</strong> "I've selected 3 photos that would work well for the watercolor style. Please let me know which one you prefer or if you'd like me to use a different photo."</p>
+            </div>
+            <div>
+              <p><strong>You (1 day ago):</strong> "Uploaded 10 photos of Max. Use whichever works best for the composition!"</p>
+            </div>
+            
+            <!-- Message form -->
+            <form>
+              <label for="message2">Send Message:</label>
+              <textarea id="message2" name="message" placeholder="Type your message here..." rows="3" cols="50"></textarea>
+              <br>
+              <button type="submit">Send</button>
+            </form>
+          </div>
         </div>
         <button type="button" onclick="location.href='commission.html'">Request New Commission</button>
         <hr />
@@ -108,19 +143,6 @@
           <p><strong>Description:</strong> 20x24 wedding portrait, oil on canvas</p>
         </div>
         <button type="button" onclick="location.href='commission.html'">Request New Commission</button>
-        <hr />
-      </section>
-
-      <!-- Messages & Updates -->
-      <section>
-        <h2>Recent Messages</h2>
-        
-        <!-- Message preview -->
-        <div>
-          <p><strong>From Artist:</strong> "Hi! I've finished the initial sketch for your family portrait. Please check your commission details to review and approve."</p>
-          <p><small>2 hours ago</small></p>
-          <button type="button" onclick="location.href='messages.html'">View All Messages</button>
-        </div>
         <hr />
       </section>
 
