@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Tell browsers not to scale the viewport automatically -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request Commission - Portrait Portal</title>
+    <link rel="icon" href="favicon.ico" />
+  </head>
+  <body>
+    <!-- Use header, main, and footer elements to give semantic structure -->
+    <header>
+      <h1>Portrait Portal</h1>
+
+      <!-- Navigation elements -->
+      <nav>
+        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
+        <menu>
+          <!-- Public Pages -->
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          
+          <!-- Protected Pages (now accessible after login) -->
+          <li><a href="commission.html">Request Commission</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          
+          <!-- Logout -->
+          <li><a href="index.html">Logout</a></li>
+        </menu>
+      </nav>
+
+      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
+      <hr />
+    </header>
+
+    <main>
+      <!-- Commission Request Header -->
+      <section>
+        <h2>Request Your Custom Digital Portrait</h2>
+        <p>Transform your precious memories into stunning digital art. Simply upload your photos, share your vision, and watch as your memories are reborn as beautiful, hand-crafted digital portraits.</p>
+        <hr />
+      </section>
+
+      <!-- Commission Form -->
+      <section>
+        <form method="post" action="dashboard.html" enctype="multipart/form-data">
+          
+          <!-- Commission Type -->
+          <div>
+            <h3>Commission Details</h3>
+            
+            <label for="subjectCount">Number of Subjects:</label>
+            <select id="subjectCount" name="subjectCount" required>
+              <option value="">Select number...</option>
+              <option value="1">Single Subject ($150)</option>
+              <option value="2">Two Subjects ($200)</option>
+              <option value="3-4">Family Group: 3-4 people ($300)</option>
+              <option value="5+">Large Group: 5+ people ($400+)</option>
+            </select>
+            
+            <label for="orientation">Portrait Orientation:</label>
+            <select id="orientation" name="orientation" required>
+              <option value="">Select orientation...</option>
+              <option value="portrait">Portrait (Vertical)</option>
+              <option value="landscape">Landscape (Horizontal)</option>
+              <option value="square">Square</option>
+              <option value="flexible">Artist's Choice</option>
+            </select>
+            
+            <label for="sizeRatio">Preferred Size Ratio:</label>
+            <select id="sizeRatio" name="sizeRatio">
+              <option value="">No preference</option>
+              <option value="4:5">4:5 (Instagram portrait)</option>
+              <option value="3:4">3:4 (Traditional portrait)</option>
+              <option value="2:3">2:3 (Classic photo ratio)</option>
+              <option value="16:9">16:9 (Widescreen landscape)</option>
+              <option value="3:2">3:2 (Standard landscape)</option>
+              <option value="1:1">1:1 (Square)</option>
+              <option value="custom">Custom ratio (specify in notes)</option>
+            </select>
+          </div>
+          
+          <hr />
+          
+          <!-- Photo Upload -->
+          <div>
+            <h3>Upload Reference Photos</h3>
+            <p>Upload high-resolution photos for your portrait.</p>
+            
+            <label for="photoUpload">Select Photos:</label>
+            <input type="file" id="photoUpload" name="photoUpload" accept="image/*"/>
+            <p><small>Supported formats: JPG, PNG. Maximum 10 photos.</small></p>
+            
+            <label for="photoNotes">Photo Notes:</label>
+            <textarea id="photoNotes" name="photoNotes" rows="2" cols="60" placeholder="Which photo is your favorite? Any specific details you'd like emphasized?"></textarea>
+          </div>
+          
+          <hr />
+          
+          <!-- Commission Description -->
+          <div>
+            <h3>Tell Your Story</h3>
+            
+            <label for="commissionTitle">Commission Title:</label>
+            <input type="text" id="commissionTitle" name="commissionTitle" placeholder="'Family Christmas Portrait,' 'Memorial for Grandma,' etc." required />
+            
+            <label for="storyDescription">What's the story behind this commission?</label>
+            <textarea id="storyDescription" name="storyDescription" rows="5" cols="60" placeholder="Tell me about the people/pets in the photos, the occasion, what this portrait means to you..." required></textarea>
+            
+            <label for="specificRequests">Specific Requests:</label>
+            <textarea id="specificRequests" name="specificRequests" rows="3" cols="60" placeholder="Any specific colors, mood, background preferences, or artistic elements you'd like included?"></textarea>
+          </div>
+             
+          <hr />
+          
+          <!-- Terms -->
+          <div>
+            <input type="checkbox" id="termsAgreement" name="termsAgreement" required />
+            <label for="termsAgreement">I agree to the commission terms: 50% deposit required to begin work, final payment due upon completion.</label>
+            
+            <input type="checkbox" id="communicationAgreement" name="communicationAgreement" required />
+            <label for="communicationAgreement">I understand this is a collaborative process and agree to provide timely feedback.</label>
+          </div>
+          
+          <!-- Submit Button -->
+          <button type="submit">Submit Commission Request</button>
+          
+        </form>
+      </section>
+
+      <!-- What Happens Next -->
+      <section>
+        <hr />
+        <h2>What Happens Next?</h2>
+        
+        <div>
+          <p><strong>1. Digital Consultation & Planning</strong></p>
+          <p>I'll review your photos and vision, then provide digital mockups and style recommendations. We'll finalize composition, color palette, and artistic approach before I begin.</p>
+        </div>
+        
+        <div>
+          <p><strong>2. Digital Creation Process</strong></p>
+          <p>Your portrait comes to life through digital stages: initial sketch, base colors, detailed rendering, and final touches. You'll receive work-in-progress screenshots throughout the process.</p>
+        </div>
+        
+        <div>
+          <p><strong>3. Review & Digital Refinement</strong></p>
+          <p>Before completion, you'll receive a preview file for review. Minor adjustments can be made quickly in the digital medium to ensure perfect satisfaction.</p>
+        </div>
+        
+        <div>
+          <p><strong>4. Digital Delivery</strong></p>
+          <p>Your finished digital portrait is delivered as high-resolution files (PNG, JPEG) via secure download. Print-ready files included for home printing or professional printing services.</p>
+        </div>
+        
+        <p>Have questions about digital art? <a href="mailto:neve@portraitportal.com">Contact me directly.</a> I'm open to alternative commission ideas.</p>
+      </section>
+    </main>
+
+    <footer>
+      <hr />
+      <span>Creator: Neve Callaway</span>
+      <br />
+      <a href="https://github.com/nevecallaway/startup">GitHub</a>
+    </footer>
+  </body>
+</html>
