@@ -113,7 +113,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Proper HTML element usage** - I found myself lost at the nested nature of the elements at times, but having the instant feedback of the live server extension helped me fix errors more quickly.
 - [x] **Links** - Links to navigate between pages as well as to different sections of the gallery on the same page.
 - [x] **Text** - Included text to give content to HTML structure, resolved using some initial usability testing with friends to see what felt the smoothest/most natural.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
+- [x] **3rd party API placeholder** - Included placeholder in commission.html for color palette selection.
 - [x] **Images** - Included in gallery.html with placeholders as well as in the gallery preview on index.html.
 - [x] **Login placeholder** - See login.html.
 - [x] **DB data placeholder** - See commission descriptions on dashboard.html acquired via commission.html.

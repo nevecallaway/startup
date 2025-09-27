@@ -111,6 +111,37 @@
             <label for="specificRequests">Specific Requests:</label>
             <textarea id="specificRequests" name="specificRequests" rows="3" cols="60" placeholder="Any specific colors, mood, background preferences, or artistic elements you'd like included?"></textarea>
           </div>
+          
+          <hr />
+          
+          <!-- Color Palette Selection (3rd Party API) -->
+          <div>
+            <h3>Color Palette Preferences</h3>
+            <p>Choose a color scheme to inspire your portrait. These palettes will help guide the artistic vision.</p>
+            
+            <button type="button" onclick="generateColorPalette()">Generate Random Palette</button>
+            <button type="button" onclick="generateWarmPalette()">Warm Tones</button>
+            <button type="button" onclick="generateCoolPalette()">Cool Tones</button>
+            <button type="button" onclick="generateNeutralPalette()">Neutral Tones</button>
+            
+            <!-- Color palette display area -->
+            <div id="colorPaletteDisplay">
+              <p><strong>Selected Color Palette:</strong></p>
+              <div id="colorSwatches">
+                <!-- 3rd party API call -->
+                <div style="background-color: #E8B4B8; width: 50px; height: 50px; display: inline-block; margin: 5px;"></div>
+                <div style="background-color: #D4A574; width: 50px; height: 50px; display: inline-block; margin: 5px;"></div>
+                <div style="background-color: #9CAF88; width: 50px; height: 50px; display: inline-block; margin: 5px;"></div>
+                <div style="background-color: #7FB3D3; width: 50px; height: 50px; display: inline-block; margin: 5px;"></div>
+                <div style="background-color: #C8A2C8; width: 50px; height: 50px; display: inline-block; margin: 5px;"></div>
+              </div>
+            </div>
+            
+            <input type="hidden" id="selectedPalette" name="selectedPalette" value="#E8B4B8,#D4A574,#9CAF88,#7FB3D3,#C8A2C8" />
+            
+            <label for="colorNotes">Color Preferences & Notes:</label>
+            <textarea id="colorNotes" name="colorNotes" rows="2" cols="60" placeholder="Any specific color preferences, colors to avoid, or how you'd like the palette applied?"></textarea>
+          </div>
              
           <hr />
           
