@@ -18,28 +18,38 @@
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
     <header>
-      <h1>Portrait Portal</h1>
+      <h1 class="navbar-brand">Portrait Portal</h1>
 
       <!-- Navigation elements -->
       <nav>
         <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
         <menu>
           <!-- Public Pages -->
-          <li><a href="index.html">Home</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gallery.html">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
           
           <!-- Authentication -->
-          <li><a href="login.html">Login/Register</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Login/Register</a>
+          </li>
           
           <!-- Protected Pages (show after login) -->
-          <li><a href="login.html">Request Commission</a></li>
-          <li><a href="login.html">Dashboard</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Request Commission</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Dashboard</a>
+          </li>
         </menu>
       </nav>
 
-      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
-      <hr />
     </header>
 
     <main>
@@ -52,7 +62,6 @@
           <p>Commissioning custom and cherished art has never been more seamless or magical.</p>
           <p>Get real-time progress updates and direct communication throughout the creative journey.</p>
           <a href="about.html">Learn More</a>
-          <hr />
         </section>
 
         <!-- Gallery preview section -->
@@ -69,7 +78,6 @@
         
           <button type="button" onclick="location.href='gallery.html'">View Full Gallery</button>
         
-          <hr />
         </section>
 
         <!-- Call to Action -->
@@ -81,13 +89,11 @@
 
         <!-- Message explaining login requirement -->
         <p><small>Commission requests require an account. <a href="login.html">Login or register</a> to get started.</small></p>
-        <hr />
       </section>
 
     </main>
 
     <footer>
-      <hr />
       <span>Creator: Neve Callaway</span>
       <br />
       <a href="https://github.com/nevecallaway/startup">GitHub</a>
