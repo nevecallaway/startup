@@ -5,7 +5,8 @@
     <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Portrait Portal</title>
-    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/login.css" />
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
@@ -29,18 +30,15 @@
           <li><a href="login.html">Dashboard</a></li>
         </menu>
       </nav>
-
-      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
-      <hr />
     </header>
 
     <main>
       <!-- Login Section -->
       <section>
         <h2>Client Login</h2>
-        <p>Access your commission dashboard and manage your portrait orders.</p>
+        <h4>Access your commission dashboard and manage your portrait orders.</h4>
         
-        <form method="get" action="dashboard.html">
+        <form>
           <div>
             <label for="loginEmail">Email:</label>
             <input type="email" id="loginEmail" name="email" placeholder="Enter email" required />
@@ -49,11 +47,10 @@
             <label for="loginPassword">Password:</label>
             <input type="password" id="loginPassword" name="password" placeholder="Enter password" required />
           </div>
-          <button type="submit">Login</button>
+          <a href="dashboard.html">Login</a>
         </form>
         
         <p>Don't have an account? Register below.</p>
-        <hr />
       </section>
 
       <!-- Registration Section -->
@@ -61,7 +58,7 @@
         <h2>Create New Account</h2>
         <p>Join Portrait Portal to commission custom artwork and track your orders.</p>
         
-        <form method="get" action="dashboard.html">
+        <form>
           <div>
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" placeholder="First name" required />
@@ -86,21 +83,19 @@
             <label for="phone">Phone Number (Optional):</label>
             <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" />
           </div>
-          <button type="submit">Create Account</button>
+          <a href="dashboard.html">Create Account</a>
         </form>
-        <hr />
       </section>
 
       <!-- Alternative Actions -->
       <section>
         <h2>Browse Without an Account</h2>
-        <button type="button" onclick="location.href='gallery.html'">View Gallery</button>
-        <button type="button" onclick="location.href='about.html'">Learn More</button>
+        <a href="gallery.html">View Gallery</a>
+        <a href="about.html">Learn More</a>
       </section>
     </main>
 
     <footer>
-      <hr />
       <span>Creator: Neve Callaway</span>
       <br />
       <a href="https://github.com/nevecallaway/startup">GitHub</a>
