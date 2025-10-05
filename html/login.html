@@ -5,31 +5,57 @@
     <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Portrait Portal</title>
+
+    <!-- Include bootstrap CSS framework -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    
     <link rel="stylesheet" href="../css/main.css" />
-  <link rel="stylesheet" href="../css/login.css" />
+    <link rel="stylesheet" href="../css/login.css" />
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
     <header>
-      <h1>Portrait Portal</h1>
-
+      <!-- Put both title and logo inside the same container -->
+      <div class="navbar-brand">
+        <h1>Portrait Portal</h1>
+        <img src="../images/logo_portrait_portal.png" alt="Logo" />
+      </div>
+      
       <!-- Navigation elements -->
       <nav>
         <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
         <menu>
           <!-- Public Pages -->
-          <li><a href="index.html">Home</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gallery.html">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
           
           <!-- Authentication -->
-          <li><a href="login.html">Login/Register</a></li>
+          <li class="nav-item">
+            <a class="nav-link active" href="login.html">Login/Register</a>
+          </li>
           
           <!-- Protected Pages (show after login) -->
-          <li><a href="login.html">Request Commission</a></li>
-          <li><a href="login.html">Dashboard</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Request Commission</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Dashboard</a>
+          </li>
         </menu>
       </nav>
+
     </header>
 
     <main>
@@ -56,7 +82,7 @@
       <!-- Registration Section -->
       <section>
         <h2>Create New Account</h2>
-        <p>Join Portrait Portal to commission custom artwork and track your orders.</p>
+        <h4>Join Portrait Portal to commission custom artwork and track your orders.</h4>
         
         <form>
           <div>
@@ -80,7 +106,7 @@
             <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required minlength="6" />
           </div>
           <div>
-            <label for="phone">Phone Number (Optional):</label>
+            <label for="phone">Phone Number:</label>
             <input type="tel" id="phone" name="phone" placeholder="+1 (123) 456-7890" />
           </div>
           <a href="dashboard.html">Create Account</a>
@@ -89,15 +115,16 @@
 
       <!-- Alternative Actions -->
       <section>
-        <h2>Browse Without an Account</h2>
-        <a href="gallery.html">View Gallery</a>
-        <a href="about.html">Learn More</a>
+        <h3>Browse Without an Account</h3>
+        <div class="link-container">
+          <a href="gallery.html" class="small-link">View Gallery</a>
+          <a href="about.html" class="small-link">Learn More</a>
+        </div>
       </section>
     </main>
 
     <footer>
       <span>Creator: Neve Callaway</span>
-      <br />
       <a href="https://github.com/nevecallaway/startup">GitHub</a>
     </footer>
   </body>
