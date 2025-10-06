@@ -126,8 +126,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Header, footer, and main content body** - Completed for each page, had trouble with remembering to include Bootstrap to keep it consistent across them but eventually got it.
 - [x] **Navigation elements** - Added opacity to animate when hover action happens, and also created a navbar for the top next to title.
 - [x] **Responsive to window resizing** - I thought of different ways to stack things for desktop vs mobile and made conditional cases for mobile.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
+- [x] **Application elements** - Handled buttons, checkboxes, form submissions.
+- [x] **Application text content** - Formatted all the different levels of text.
 - [ ] **Application images** - I did not complete this part of the deliverable.
 
 ## 🚀 React part 1: Routing deliverable

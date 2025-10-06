@@ -14,6 +14,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/index.css" />
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
@@ -65,7 +66,7 @@
           <h4>Upload your photos, share your vision, and watch as
             your memories are reborn as beautiful, hand-crafted portraits.</h4>
           <h4>Get real-time progress updates and direct communication throughout the creative journey.</h4>
-          <a href="about.html">Learn More</a>
+          <button type="button" onclick="location.href='about.html'">Learn More</button>
         </section>
 
         <!-- Gallery preview section -->
@@ -73,14 +74,14 @@
           <h2>Gallery</h2>
           <h4>Browse custom portrait examples:</h4>
         
-          <!-- Gallery preview with placeholder images -->
-          <div>
-            <img src="https://picsum.photos/200/200?random=1" alt="Family Portrait Example" width="200" />
-            <img src="https://picsum.photos/200/200?random=2" alt="Pet Portrait Example" width="200" />
-            <img src="https://picsum.photos/200/200?random=3" alt="Memorial Portrait Example" width="200" />
+          <!-- Gallery preview with actual images -->
+          <div class="gallery-container">
+            <img src="../images/gallery_2.jpg" alt="Pet Portrait Example" />
+            <img src="../images/gallery_6.jpg" alt="Memorial Portrait Example" />
+            <img src="../images/gallery_14.jpg" alt="Individual Portrait Example" />
           </div>
         
-          <a href="gallery.html">View Full Gallery</a>
+          <button type="button" onclick="location.href='gallery.html'">View Full Gallery</button>
 
         </section>
 
@@ -89,10 +90,11 @@
         <h2>Get Started</h2>
         <h4>Transform your precious memories into timeless art.</h4>
 
-        <a href="login.html" class="small-link">Request a Commission</a>
-        <a href="about.html" class="small-link">Learn More</a>
+        <button type="button" onclick="location.href='login.html'" class="small-link">Request a Commission</button>
+        <button type="button" onclick="location.href='about.html'" class="small-link">Learn More</button>
 
-        <h4>Commission requests require an account. <a href="login.html" class="small-link">Login or register</a> to get started.</h4>
+        <h4>Commission requests require an account.</h4>
+        <h4><button type="button" onclick="location.href='login.html'" class="small-link">Login or register</button> to get started.</h4>
       </section>
 
     </main>

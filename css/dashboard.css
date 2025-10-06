@@ -52,25 +52,6 @@ section div div {
   border-left: 3px solid #D5D6EA;
 }
 
-button {
-  background-color: #180729;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0.25rem;
-  width: auto;
-  align-self: center;
-}
-
-button:hover {
-  background-color: #2c1a4a;
-  opacity: 0.7;
-}
-
 textarea {
   width: 100%;
   padding: 0.8rem;
@@ -103,7 +84,6 @@ form label {
 
 form button {
   margin-top: 0.5rem;
-
 }
 
 h2 {

@@ -1,0 +1,2 @@
+/* Import commission styles (which imports dashboard.css → login.css) */
+@import url('commission.css');
