@@ -1,0 +1,8 @@
+@import url('dashboard.css');
+
+section div div {
+  background-color: #f9f9f9;
+  padding: 0.5rem;
+  margin: 0.1rem 0;
+  border: none;
+}

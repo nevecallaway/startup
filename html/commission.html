@@ -6,32 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Request Commission - Portrait Portal</title>
     <link rel="icon" href="favicon.ico" />
+    
+    <!-- Add these CSS links -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/commission.css" />
   </head>
   <body>
     <!-- Use header, main, and footer elements to give semantic structure -->
     <header>
-      <h1>Portrait Portal</h1>
+      <div class="navbar-brand">
+        <h1>Portrait Portal</h1>
+        <img src="../images/logo_portrait_portal.png" alt="Logo" />
+      </div>
 
       <!-- Navigation elements -->
       <nav>
         <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
         <menu>
           <!-- Public Pages -->
-          <li><a href="index.html">Home</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gallery.html">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
           
           <!-- Protected Pages (now accessible after login) -->
-          <li><a href="commission.html">Request Commission</a></li>
-          <li><a href="dashboard.html">Dashboard</a></li>
+          <li class="nav-item">
+            <a class="nav-link active" href="commission.html">Request Commission</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+          </li>
           
           <!-- Logout -->
-          <li><a href="index.html">Logout</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Logout</a>
+          </li>
         </menu>
       </nav>
 
-      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
-      <hr />
     </header>
 
     <main>
@@ -39,7 +62,6 @@
       <section>
         <h2>Request Your Custom Digital Portrait</h2>
         <p>Transform your precious memories into stunning digital art. Simply upload your photos, share your vision, and watch as your memories are reborn as beautiful, hand-crafted digital portraits.</p>
-        <hr />
       </section>
 
       <!-- Commission Form -->
@@ -81,8 +103,6 @@
             </select>
           </div>
           
-          <hr />
-          
           <!-- Photo Upload -->
           <div>
             <h3>Upload Reference Photos</h3>
@@ -95,8 +115,6 @@
             <label for="photoNotes">Photo Notes:</label>
             <textarea id="photoNotes" name="photoNotes" rows="2" cols="60" placeholder="Which photo is your favorite? Any specific details you'd like emphasized?"></textarea>
           </div>
-          
-          <hr />
           
           <!-- Commission Description -->
           <div>
@@ -111,8 +129,6 @@
             <label for="specificRequests">Specific Requests:</label>
             <textarea id="specificRequests" name="specificRequests" rows="3" cols="60" placeholder="Any specific colors, mood, background preferences, or artistic elements you'd like included?"></textarea>
           </div>
-          
-          <hr />
           
           <!-- Color Palette Selection (3rd Party API) -->
           <div>
@@ -142,8 +158,6 @@
             <label for="colorNotes">Color Preferences & Notes:</label>
             <textarea id="colorNotes" name="colorNotes" rows="2" cols="60" placeholder="Any specific color preferences, colors to avoid, or how you'd like the palette applied?"></textarea>
           </div>
-             
-          <hr />
           
           <!-- Terms -->
           <div>
@@ -162,7 +176,6 @@
 
       <!-- What Happens Next -->
       <section>
-        <hr />
         <h2>What Happens Next?</h2>
         
         <div>
@@ -185,14 +198,13 @@
           <p>Your finished digital portrait is delivered as high-resolution files (PNG, JPEG) via secure download. Print-ready files included for home printing or professional printing services.</p>
         </div>
         
-        <p>Have questions about digital art? <a href="mailto:neve@portraitportal.com">Contact me directly.</a> I'm open to alternative commission ideas.</p>
+        <p><strong>Have questions about digital art? I'm open to alternative commission ideas.</strong></p>
+        <button type="button">Contact me directly.</button>
       </section>
     </main>
 
     <footer>
-      <hr />
       <span>Creator: Neve Callaway</span>
-      <br />
       <a href="https://github.com/nevecallaway/startup">GitHub</a>
     </footer>
   </body>
