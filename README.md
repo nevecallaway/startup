@@ -128,7 +128,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Responsive to window resizing** - I thought of different ways to stack things for desktop vs mobile and made conditional cases for mobile.
 - [x] **Application elements** - Handled buttons, checkboxes, form submissions.
 - [x] **Application text content** - Formatted all the different levels of text.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] **Application images** - Seen in gallery preview on home page as well as on gallery page.
 
 ## 🚀 React part 1: Routing deliverable
 
