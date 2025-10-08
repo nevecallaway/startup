@@ -27,7 +27,7 @@ Successfully obtained domain name and redirected traffic to my server. I encount
 
 ## CSS
 
-So hard and confusing honestly, spacing was hard and remembering what was in each container, but debugging in browser helped.
+So hard and confusing honestly, spacing was hard and remembering what was in each container, but debugging in browser helped. My classic mistake was not including Bootstrap properly so my header wouldn't load as I wanted to. Somehow forgot every single time. Had a hard time getting my files to show up on my domain properly as the deployFiles.sh expects them to be in a "/public" folder. Eventually had to change the file paths of every image reference and move everything to that expected directory.
 
 ## React Part 1: Routing
 
