@@ -6,8 +6,8 @@
   --gap: 1rem;
 }
 
-html, body { height: 100%; }
-body {
+html, .body { height: 100%; }
+.body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: var(--purple);
