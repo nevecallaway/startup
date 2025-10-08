@@ -1,52 +1,69 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Home } from './home/home';
+import { Login } from './login/login';
+import { Gallery } from './gallery/gallery';
+import { Dashboard } from './dashboard/dashboard';
+import { About } from './about/about';
+import { Commission } from './commission/commission';
 
 export default function App() {
   return (
-    <div>
-      <header>
-        {/* Put both title and logo inside the same container */}
-        <div className="navbar-brand">
-            <h1>Portrait Portal</h1>
-            <img src="../images/logo_portrait_portal.png" alt="Logo" />
-        </div>
+    <BrowserRouter>
+      <div>
+        <header>
+          <div className="navbar-brand">
+              <h1>Portrait Portal</h1>
+              <img src="/images/logo_portrait_portal.png" alt="Logo" />
+          </div>
 
-        <nav>
-          <menu>
-          {/* Public Pages */}
-          <li className="nav-item">
-              <a className="nav-link active" href="index.html">Home</a>
-          </li>
-          <li className="nav-item">
-              <a className="nav-link" href="gallery.html">Gallery</a>
-          </li>
-          <li className="nav-item">
-              <a className="nav-link" href="about.html">About</a>
-          </li>
+          <nav>
+            <menu>
+              <li className="nav-item">
+                  <NavLink className='nav-link' to=''>Home</NavLink>
+                  </li>
+              <li className="nav-item">
+                  <NavLink className='nav-link' to='gallery'>Gallery</NavLink>
+              </li>
+              <li className="nav-item">
+                  <NavLink className='nav-link' to='about'>About</NavLink>
+              </li>
 
-          {/* Authentication */}
-          <li className="nav-item">
-              <a className="nav-link" href="login.html">Login/Register</a>
-          </li>
+              <li className="nav-item">
+                  <NavLink className='nav-link' to='login'>Login/Register</NavLink>
+              </li>
 
-          {/* Protected Pages (show after login) */}
-          <li className="nav-item">
-              <a className="nav-link" href="login.html">Request Commission</a>
-          </li>
-          <li className="nav-item">
-              <a className="nav-link" href="login.html">Dashboard</a>
-          </li>
-          </menu>
-        </nav>
-      </header>
+              <li className="nav-item">
+                  <NavLink className='nav-link' to='commission'>Request Commission</NavLink>
+              </li>
+              <li className="nav-item">
+                  <NavLink className='nav-link' to='dashboard'>Dashboard</NavLink>
+              </li>
+            </menu>
+          </nav>
+        </header>
 
-      <main>App components go here</main>
+        <Routes>
+          <Route path='/' element={<Home />} exact />
+          <Route path='/login' element={<Login />} />
+          <Route path='/gallery' element={<Gallery />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/commission' element={<Commission />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
 
-      <footer>
-      <span>Creator: Neve Callaway</span>
-      <a href="https://github.com/nevecallaway/startup">GitHub</a>
-    </footer>
-    </div>
+        <footer>
+          <span>Creator: Neve Callaway</span>
+          <a href="https://github.com/nevecallaway/startup">GitHub</a>
+        </footer>
+      </div>
+    </BrowserRouter>
   );
+}
+
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
