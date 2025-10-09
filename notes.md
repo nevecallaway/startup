@@ -31,7 +31,9 @@ So hard and confusing honestly, spacing was hard and remembering what was in eac
 
 ## React Part 1: Routing
 
-Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
+- Start dev server: `npm run dev`
+- Public assets (images) served from `public/images` and referenced with absolute paths like `/images/logo_portrait_portal.png`
+- If you add new component files, export them as named exports (`export function X(){}`) or adjust imports accordingly
 
 ## React Part 2: Reactivity
 
