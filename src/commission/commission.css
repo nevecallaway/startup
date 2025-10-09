@@ -1,4 +1,4 @@
-@import url('dashboard.css');
+@import url('../dashboard/dashboard.css');
 
 section div div {
   background-color: #f9f9f9;
