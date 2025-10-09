@@ -1,4 +1,5 @@
 import React from 'react';
+import './commission.css';
 
 export function Commission() {
   return (
