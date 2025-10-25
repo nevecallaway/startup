@@ -1,6 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Home() {
+  const navigate = useNavigate();
+
+  const goAbout = () => navigate('/about');
+  const goGallery = () => navigate('/gallery');
+  const goLogin = () => navigate('/login');
+  const goCommission = () => {
+    const isAuth = !!localStorage.getItem('authToken');
+    navigate(isAuth ? '/commission' : '/login');
+  };
+
   return (
     <main>
         {/* About preview section */}
@@ -11,7 +22,7 @@ export function Home() {
           <h4>Upload your photos, share your vision, and watch as
             your memories are reborn as beautiful, hand-crafted portraits.</h4>
           <h4>Get real-time progress updates and direct communication throughout the creative journey.</h4>
-          <button type="button" onclick="location.href='about.html'">Learn More</button>
+          <button type="button" onClick={goAbout}>Learn More</button>
         </section>
 
         {/* Gallery preview section */}
@@ -25,8 +36,8 @@ export function Home() {
             <img src="../images/gallery_6.jpg" alt="Memorial Portrait Example" />
             <img src="../images/gallery_14.jpg" alt="Individual Portrait Example" />
           </div>
-        
-          <button type="button" onclick="location.href='gallery.html'">View Full Gallery</button>
+
+          <button type="button" onClick={goGallery}>View Full Gallery</button>
 
         </section>
 
@@ -35,11 +46,11 @@ export function Home() {
         <h2>Get Started</h2>
         <h4>Transform your precious memories into timeless art.</h4>
 
-        <button type="button" onclick="location.href='login.html'" class="small-link">Request a Commission</button>
-        <button type="button" onclick="location.href='about.html'" class="small-link">Learn More</button>
+        <button type="button" onClick={goCommission} class="small-link">Request a Commission</button>
+        <button type="button" onClick={goAbout} class="small-link">Learn More</button>
 
         <h4>Commission requests require an account.</h4>
-        <h4><button type="button" onclick="location.href='login.html'" class="small-link">Login or register</button> to get started.</h4>
+        <h4><button type="button" onClick={goLogin} class="small-link">Login or register</button> to get started.</h4>
       </section>
 
     </main>
