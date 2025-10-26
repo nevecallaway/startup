@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function About() {
+  const navigate = useNavigate();
+
+  function toCommission() {
+    navigate('/commission');
+  }
+  function toGallery() {
+    navigate('/gallery');
+  }
+  function toDashboard() {
+    const isAuth = !!localStorage.getItem('authToken');
+    navigate(isAuth ? '/dashboard' : '/login');
+  }
+
   return (
     <main>
       <section>
@@ -105,12 +119,12 @@ export function About() {
         <h2>Ready to Create Digital Magic?</h2>
         <div>
           <p>Transform your precious memories into stunning digital art.</p>
-          
-          <button type="button" onclick="location.href='login.html'">Request a Digital Commission</button>
-          <button type="button" onclick="location.href='gallery.html'">View Digital Gallery</button>
-          
+
+          <button type="button" onClick={toCommission}>Request a Digital Commission</button>
+          <button type="button" onClick={toGallery}>View Digital Gallery</button>
+
           <p><strong>Have questions about digital art? I'm open to alternative commission ideas.</strong></p>
-          <button type="button">Contact me directly.</button>
+          <button type="button" onClick={toDashboard}>Contact me directly.</button>
         </div>
       </section>
     </main>
