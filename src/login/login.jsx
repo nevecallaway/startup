@@ -5,6 +5,9 @@ import './login.css';
 export function Login() {
   const navigate = useNavigate();
 
+  const toAbout = () => navigate('/about');
+  const toGallery = () => navigate('/gallery');
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -171,8 +174,8 @@ export function Login() {
       <section>
         <h3>Browse Without an Account</h3>
         <div className="link-container">
-          <button type="button" className="small-link" onClick={() => navigate('/gallery')}>View Gallery</button>
-          <button type="button" className="small-link" onClick={() => navigate('/about')}>Learn More</button>
+          <button type="button" className="small-link" onClick={toGallery}>View Gallery</button>
+          <button type="button" className="small-link" onClick={toAbout}>Learn More</button>
         </div>
       </section>
     </main>

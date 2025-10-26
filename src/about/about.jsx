@@ -4,16 +4,15 @@ import { useNavigate } from 'react-router-dom';
 export function About() {
   const navigate = useNavigate();
 
-  function toCommission() {
-    navigate('/commission');
-  }
-  function toGallery() {
-    navigate('/gallery');
-  }
-  function toDashboard() {
+  const toGallery = () => navigate('/gallery');
+  const toCommission = () => {
+    const isAuth = !!localStorage.getItem('authToken');
+    navigate(isAuth ? '/commission' : '/login');
+  };
+  const toDashboard = () => {
     const isAuth = !!localStorage.getItem('authToken');
     navigate(isAuth ? '/dashboard' : '/login');
-  }
+  };
 
   return (
     <main>
