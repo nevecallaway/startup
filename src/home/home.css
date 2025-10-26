@@ -1,0 +1,31 @@
+/* gallery preview: force horizontal row/override global img rules */
+.gallery-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-container img {
+  flex: 0 0 160px;
+  width: 160px !important;
+  height: 160px !important;
+  object-fit: cover;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .gallery-container {
+    flex-wrap: nowrap;
+  }
+  .gallery-container img {
+    flex: 0 0 120px;
+    width: 120px !important;
+    height: 120px !important;
+  }
+}
