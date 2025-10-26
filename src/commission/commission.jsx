@@ -1,22 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './commission.css';
 
 export function Commission() {
+  const navigate = useNavigate();
+  const toDashboard = () => {
+    const isAuth = !!localStorage.getItem('authToken');
+    navigate(isAuth ? '/dashboard' : '/login');
+  };
+
+  const [form, setForm] = useState({
+    subjectCount: '',
+    orientation: '',
+    sizeRatio: '',
+    photoNotes: '',
+    commissionTitle: '',
+    storyDescription: '',
+    specificRequests: '',
+    colorNotes: '',
+    termsAgreement: false,
+    communicationAgreement: false,
+    selectedPalette: '#E8B4B8,#D4A574,#9CAF88,#7FB3D3,#C8A2C8',
+  });
+
+  const [files, setFiles] = useState([]);
+  const [palette, setPalette] = useState(['#E8B4B8','#D4A574','#9CAF88','#7FB3D3','#C8A2C8']);
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  function handleChange(e) {
+    const { name, value, type, checked } = e.target;
+    setForm(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  }
+
+  function handleFiles(e) {
+    const list = Array.from(e.target.files || []);
+    setFiles(list);
+  }
+
+  function randomColor() {
+    return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+  }
+  function randomPalette() {
+    const p = Array.from({length:5}, () => randomColor());
+    setPalette(p);
+    setForm(prev => ({ ...prev, selectedPalette: p.join(',') }));
+  }
+  function warmPalette() {
+    const p = ['#FFB4A2','#FF7F50','#D96C3B','#C85A3B','#8B2D2D'];
+    setPalette(p);
+    setForm(prev => ({ ...prev, selectedPalette: p.join(',') }));
+  }
+  function coolPalette() {
+    const p = ['#B3E5FC','#81D4FA','#4FC3F7','#29B6F6','#0288D1'];
+    setPalette(p);
+    setForm(prev => ({ ...prev, selectedPalette: p.join(',') }));
+  }
+  function neutralPalette() {
+    const p = ['#F5F5F5','#E0E0E0','#BDBDBD','#9E9E9E','#616161'];
+    setPalette(p);
+    setForm(prev => ({ ...prev, selectedPalette: p.join(',') }));
+  }
+
+  function pickPaletteColor(index) {
+    setForm(prev => ({ ...prev, selectedPalette: palette.join(',') }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError('');
+
+    if (!form.termsAgreement || !form.communicationAgreement) {
+      setError('You must agree to the commission terms and communication expectations.');
+      return;
+    }
+    if (!form.commissionTitle || !form.storyDescription) {
+      setError('Please provide a title and a description for the commission.');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      // Placeholder save: place commission in localStorage
+      const commissions = JSON.parse(localStorage.getItem('commissions') || '[]');
+      const owner = localStorage.getItem('userEmail') || 'guest';
+      const id = Date.now();
+      const savedFiles = files.map(f => ({ name: f.name, size: f.size, type: f.type }));
+      const newCommission = {
+        id,
+        owner,
+        createdAt: new Date().toISOString(),
+        form: { ...form },
+        files: savedFiles,
+        status: 'submitted'
+      };
+      commissions.push(newCommission);
+      localStorage.setItem('commissions', JSON.stringify(commissions));
+
+      toDashboard();
+    } catch (err) {
+      setError('Failed to save commission. Try again.');
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  }
+  
   return (
-    <main>
+    <main className="commission-main">
       <section>
         <h2>Request Your Custom Digital Portrait</h2>
         <p>Transform your precious memories into stunning digital art. Simply upload your photos, share your vision, and watch as your memories are reborn as beautiful, hand-crafted digital portraits.</p>
       </section>
 
       <section>
-        <form method="post" action="dashboard.html" encType="multipart/form-data">
-
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div>
             <h3>Commission Details</h3>
 
             <label htmlFor="subjectCount">Number of Subjects:</label>
-            <select id="subjectCount" name="subjectCount" required>
+            <select id="subjectCount" name="subjectCount" value={form.subjectCount} onChange={handleChange} required>
               <option value="">Select number...</option>
               <option value="1">Single Subject ($150)</option>
               <option value="2">Two Subjects ($200)</option>
@@ -25,7 +131,7 @@ export function Commission() {
             </select>
 
             <label htmlFor="orientation">Portrait Orientation:</label>
-            <select id="orientation" name="orientation" required>
+            <select id="orientation" name="orientation" value={form.orientation} onChange={handleChange} required>
               <option value="">Select orientation...</option>
               <option value="portrait">Portrait (Vertical)</option>
               <option value="landscape">Landscape (Horizontal)</option>
@@ -34,7 +140,7 @@ export function Commission() {
             </select>
 
             <label htmlFor="sizeRatio">Preferred Size Ratio:</label>
-            <select id="sizeRatio" name="sizeRatio">
+            <select id="sizeRatio" name="sizeRatio" value={form.sizeRatio} onChange={handleChange}>
               <option value="">No preference</option>
               <option value="4:5">4:5 (Instagram portrait)</option>
               <option value="3:4">3:4 (Traditional portrait)</option>
@@ -48,65 +154,80 @@ export function Commission() {
 
           <div>
             <h3>Upload Reference Photos</h3>
-            <p>Upload high-resolution photos for your portrait.</p>
-
+            <p>Upload high-resolution photos for your portrait. (JPG/PNG, max 10)</p>
             <label htmlFor="photoUpload">Select Photos:</label>
-            <input type="file" id="photoUpload" name="photoUpload" accept="image/*"/>
-            <p><small>Supported formats: JPG, PNG. Maximum 10 photos.</small></p>
-
+            <input id="photoUpload" name="photoUpload" type="file" accept="image/*" multiple onChange={handleFiles} />
+            {files.length > 0 && (
+              <div className="selected-files">
+                <strong>Selected files:</strong>
+                <ul>
+                  {files.map((f, i) => <li key={i}>{f.name} ({Math.round(f.size/1024)} KB)</li>)}
+                </ul>
+              </div>
+            )}
             <label htmlFor="photoNotes">Photo Notes:</label>
-            <textarea id="photoNotes" name="photoNotes" rows="2" cols="60" placeholder="Which photo is your favorite? Any specific details you'd like emphasized?"></textarea>
+            <textarea id="photoNotes" name="photoNotes" rows="2" cols="60" value={form.photoNotes} onChange={handleChange} placeholder="Which photo is your favorite? Any specific details you'd like emphasized?" />
           </div>
 
           <div>
             <h3>Tell Your Story</h3>
 
             <label htmlFor="commissionTitle">Commission Title:</label>
-            <input type="text" id="commissionTitle" name="commissionTitle" placeholder="'Family Christmas Portrait,' 'Memorial for Grandma,' etc." required />
+            <input type="text" id="commissionTitle" name="commissionTitle" value={form.commissionTitle} onChange={handleChange} placeholder="'Family Christmas Portrait,' 'Memorial for Grandma,' etc." required />
 
             <label htmlFor="storyDescription">What's the story behind this commission?</label>
-            <textarea id="storyDescription" name="storyDescription" rows="5" cols="60" placeholder="Tell me about the people/pets in the photos, the occasion, what this portrait means to you..." required></textarea>
+            <textarea id="storyDescription" name="storyDescription" rows="5" cols="60" value={form.storyDescription} onChange={handleChange} placeholder="Tell me about the people/pets in the photos, the occasion, what this portrait means to you..." required></textarea>
 
             <label htmlFor="specificRequests">Specific Requests:</label>
-            <textarea id="specificRequests" name="specificRequests" rows="3" cols="60" placeholder="Any specific colors, mood, background preferences, or artistic elements you'd like included?"></textarea>
+            <textarea id="specificRequests" name="specificRequests" rows="3" cols="60" value={form.specificRequests} onChange={handleChange} placeholder="Any specific colors, mood, background preferences, or artistic elements you'd like included?"></textarea>
           </div>
 
           <div>
             <h3>Color Palette Preferences</h3>
             <p>Choose a color scheme to inspire your portrait. These palettes will help guide the artistic vision.</p>
 
-            {/* temporary handlers */}
-            <button type="button" onClick={() => {}}>Generate Random Palette</button>
-            <button type="button" onClick={() => {}}>Warm Tones</button>
-            <button type="button" onClick={() => {}}>Cool Tones</button>
-            <button type="button" onClick={() => {}}>Neutral Tones</button>
-
+            <div className="palette-buttons">
+              <button type="button" onClick={randomPalette}>Generate Random Palette</button>
+              <button type="button" onClick={warmPalette}>Warm Tones</button>
+              <button type="button" onClick={coolPalette}>Cool Tones</button>
+              <button type="button" onClick={neutralPalette}>Neutral Tones</button>
+            </div>
+            
             <div id="colorPaletteDisplay">
               <p><strong>Selected Color Palette:</strong></p>
-              <div id="colorSwatches">
-                <div style={{ backgroundColor: '#E8B4B8', width: '50px', height: '50px', display: 'inline-block', margin: '5px' }} />
-                <div style={{ backgroundColor: '#D4A574', width: '50px', height: '50px', display: 'inline-block', margin: '5px' }} />
-                <div style={{ backgroundColor: '#9CAF88', width: '50px', height: '50px', display: 'inline-block', margin: '5px' }} />
-                <div style={{ backgroundColor: '#7FB3D3', width: '50px', height: '50px', display: 'inline-block', margin: '5px' }} />
-                <div style={{ backgroundColor: '#C8A2C8', width: '50px', height: '50px', display: 'inline-block', margin: '5px' }} />
+              <div id="colorSwatches" className="color-swatches">
+                {palette.map((c, i) => {
+                  const selectedColors = form.selectedPalette ? form.selectedPalette.split(',') : [];
+                  const isSelected = selectedColors.includes(c);
+                  return (
+                    <div
+                      key={i}
+                      className={`color-swatch ${isSelected ? 'selected' : ''}`}
+                      onClick={() => pickPaletteColor(i)}
+                      title={c}
+                      style={{ backgroundColor: c }}
+                    />
+                  );
+                })}
               </div>
             </div>
 
-            <input type="hidden" id="selectedPalette" name="selectedPalette" value="#E8B4B8,#D4A574,#9CAF88,#7FB3D3,#C8A2C8" />
+            <input type="hidden" id="selectedPalette" name="selectedPalette" value={form.selectedPalette} />
 
             <label htmlFor="colorNotes">Color Preferences & Notes:</label>
-            <textarea id="colorNotes" name="colorNotes" rows="2" cols="60" placeholder="Any specific color preferences, colors to avoid, or how you'd like the palette applied?"></textarea>
+            <textarea id="colorNotes" name="colorNotes" rows="2" cols="60" value={form.colorNotes} onChange={handleChange} placeholder="Any specific color preferences, colors to avoid, or how you'd like the palette applied?"></textarea>
           </div>
 
           <div>
-            <input type="checkbox" id="termsAgreement" name="termsAgreement" required />
+            <input type="checkbox" id="termsAgreement" name="termsAgreement" checked={form.termsAgreement} onChange={handleChange} />
             <label htmlFor="termsAgreement">I agree to the commission terms: 50% deposit required to begin work, final payment due upon completion.</label>
 
-            <input type="checkbox" id="communicationAgreement" name="communicationAgreement" required />
+            <input type="checkbox" id="communicationAgreement" name="communicationAgreement" checked={form.communicationAgreement} onChange={handleChange} />
             <label htmlFor="communicationAgreement">I understand this is a collaborative process and agree to provide timely feedback.</label>
           </div>
 
-          <button type="submit">Submit Commission Request</button>
+          {error && <p className="error">{error}</p>}
+          <button type="submit" disabled={saving}>{saving ? 'Submitting...' : 'Submit Commission Request'}</button>
 
         </form>
       </section>
@@ -135,7 +256,7 @@ export function Commission() {
         </div>
 
         <p><strong>Have questions about digital art? I'm open to alternative commission ideas.</strong></p>
-        <button type="button">Contact me directly.</button>
+        <button type="button" onClick={toDashboard}>Contact me directly.</button>
       </section>
     </main>
   );

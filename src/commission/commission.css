@@ -6,3 +6,41 @@ section div div {
   margin: 0.1rem 0;
   border: none;
 }
+
+.commission-main .selected-files {
+  margin-top: 8px;
+}
+
+.commission-main .palette-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.commission-main .color-swatches {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.commission-main .color-swatch {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin: 5px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  cursor: pointer;
+}
+
+.commission-main .color-swatch.selected {
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+  transform: scale(1.03);
+}
+
+.commission-main .swatch-1 { background-color: #E8B4B8; }
+.commission-main .swatch-2 { background-color: #D4A574; }
+.commission-main .swatch-3 { background-color: #9CAF88; }
+.commission-main .swatch-4 { background-color: #7FB3D3; }
+.commission-main .swatch-5 { background-color: #C8A2C8; }
