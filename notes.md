@@ -37,7 +37,7 @@ So hard and confusing honestly, spacing was hard and remembering what was in eac
 
 ## React Part 2: Reactivity
 
-Deployed simon-react to simon.portraitportal.me successfully after debugging using browser.
+Deployed simon-react to simon.portraitportal.me successfully after debugging using browser. Then added reactivity to each app component, and completed deploying those files to server.
 
 ## Midterm Study Guide
 

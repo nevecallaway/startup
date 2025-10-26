@@ -142,8 +142,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - Mocked backend pieces using localStorage (user/auth, commissions, messages, file metadata). Commission submission saves to storage and starts a client-side simulateProgress (setTimeouts) that updates commission.progress and dispatches 'commissions:updated' events to emulate WebSocket pushes so the app behaves fully functional for the demo.
+- [x] **Hooks** - Used React hooks across components: useState for local/form/draft state, useEffect to load/persist state and subscribe/unsubscribe to simulated updates, and useNavigate for reactive routing.
+
 
 ## 🚀 Service deliverable
 
