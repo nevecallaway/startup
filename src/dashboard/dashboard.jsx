@@ -9,15 +9,25 @@ export function Dashboard() {
   const [drafts, setDrafts] = useState({});
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('commissions');
-      const stored = raw ? JSON.parse(raw) : [];
-      // stored is oldest-first in storage; show newest-first in UI
-      setCommissions(stored.slice().reverse());
-    } catch (e) {
-      console.warn('Failed to parse commissions from storage', e);
-      setCommissions([]);
+    function reloadFromStorage() {
+      try {
+        const raw = localStorage.getItem('commissions');
+        const stored = raw ? JSON.parse(raw) : [];
+        setCommissions(stored.slice().reverse());
+      } catch (e) {
+        console.warn('Failed to parse commissions from storage', e);
+        setCommissions([]);
+      }
     }
+
+    // initial load
+    reloadFromStorage();
+
+    // respond to simulated server pushes
+    window.addEventListener('commissions:updated', reloadFromStorage);
+    return () => {
+      window.removeEventListener('commissions:updated', reloadFromStorage);
+    };
   }, []);
 
   useEffect(() => {

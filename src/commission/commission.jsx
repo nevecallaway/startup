@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './commission.css';
+import { simulateProgress } from '../simulateServer';
 
 export function Commission() {
   const navigate = useNavigate();
@@ -84,7 +85,6 @@ export function Commission() {
 
     setSaving(true);
     try {
-      // Placeholder save: place commission in localStorage
       const commissions = JSON.parse(localStorage.getItem('commissions') || '[]');
       const owner = localStorage.getItem('userEmail') || 'guest';
       const id = Date.now();
@@ -95,10 +95,14 @@ export function Commission() {
         createdAt: new Date().toISOString(),
         form: { ...form },
         files: savedFiles,
-        status: 'submitted'
+        status: 'submitted',
+        progress: {}
       };
       commissions.push(newCommission);
       localStorage.setItem('commissions', JSON.stringify(commissions));
+
+      // start simulated server-side progress updates
+      simulateProgress(id);
 
       toDashboard();
     } catch (err) {
