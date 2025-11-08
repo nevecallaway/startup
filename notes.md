@@ -272,6 +272,5 @@ new Promise(res => setTimeout(() => res('Hi'),1000)).then(console.log) // → 'H
 // 4) Promise chain
 Promise.resolve(2).then(x=>x*2).then(x=>x+1).then(console.log) // → 5
 ```
-
----
-**Good luck on your midterm! Review, practice, and trust your preparation. You're ready for this! 🎉**
+## Service
+- I learned that you need to make sure simon is deployed with an index.js script that specifies listening on a different port from startup.
