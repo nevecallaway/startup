@@ -21,6 +21,10 @@ app.use(`/api`, apiRouter);
 
 // CreateAuth a new user
 apiRouter.post('/auth/create', async (req, res) => {
+  if (!req.body || !req.body.email || !req.body.password) {
+    res.status(400).send({ msg: 'email and password required' });
+    return;
+  }
   if (await findUser('email', req.body.email)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
@@ -59,20 +63,60 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 const verifyAuth = async (req, res, next) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
+    req.user = user;
     next();
   } else {
     res.status(401).send({ msg: 'Unauthorized' });
   }
 };
 
-// Default error handler
-app.use(function (err, req, res, next) {
-  res.status(500).send({ type: err.name, message: err.message });
+// PROTECTED ROUTES BELOW
+// Return current user
+apiRouter.get('/me', verifyAuth, (req, res) => {
+  res.send({ email: req.user.email });
 });
 
-// Return the application's default page if the path is unknown
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
+// Create a commission
+apiRouter.post('/commissions', verifyAuth, (req, res) => {
+  const id = Date.now();
+  const commission = {
+    id,
+    owner: req.user.email,
+    createdAt: new Date().toISOString(),
+    commissionTitle: req.body.commissionTitle || 'Untitled',
+    storyDescription: req.body.storyDescription || '',
+    subjectCount: req.body.subjectCount || '',
+    orientation: req.body.orientation || '',
+    sizeRatio: req.body.sizeRatio || '',
+    photoNotes: req.body.photoNotes || '',
+    specificRequests: req.body.specificRequests || '',
+    colorNotes: req.body.colorNotes || '',
+    selectedPalette: req.body.selectedPalette || '',
+    termsAgreement: req.body.termsAgreement || false,
+    communicationAgreement: req.body.communicationAgreement || false,
+    status: 'submitted',
+    progress: {},
+    files: (req.body.files || []).map(f => ({ name: f.name, size: f.size, type: f.type })),
+    messages: []
+  };
+  commissions.push(commission);
+  res.status(201).send(commission);
+});
+
+// List commissions for current user
+apiRouter.get('/commissions', verifyAuth, (req, res) => {
+  const mine = commissions.filter(c => c.owner === req.user.email);
+  res.send(mine);
+});
+
+// Append message to commission
+apiRouter.post('/commissions/:id/messages', verifyAuth, (req, res) => {
+  const id = Number(req.params.id);
+  const c = commissions.find(x => x.id === id && x.owner === req.user.email);
+  if (!c) return res.status(404).send({ msg: 'Not found' });
+  const msg = { id: uuid.v4(), from: req.user.email, text: req.body.text || '', createdAt: new Date().toISOString() };
+  c.messages.push(msg);
+  res.status(201).send(msg);
 });
 
 // Helper functions
@@ -104,6 +148,16 @@ function setAuthCookie(res, authToken) {
     sameSite: 'strict',
   });
 }
+
+// Default error handler (must come after all routes)
+app.use(function (err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
+});
+
+// Return the application's default page if the path is unknown (must be last)
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' });
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
