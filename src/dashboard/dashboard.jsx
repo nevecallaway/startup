@@ -1,77 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import './dashboard.css';
 
 export function Dashboard() {
-  const navigate = useNavigate();
-  const [userName, setUserName] = useState(() => localStorage.getItem('userName') || 'Client');
+  const [userName, setUserName] = useState('User');
   const [commissions, setCommissions] = useState([]);
   const [drafts, setDrafts] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    function reloadFromStorage() {
+    async function loadData() {
       try {
-        const raw = localStorage.getItem('commissions');
-        const stored = raw ? JSON.parse(raw) : [];
-        setCommissions(stored.slice().reverse());
-      } catch (e) {
-        console.warn('Failed to parse commissions from storage', e);
-        setCommissions([]);
+        // Fetch current user
+        const userRes = await fetch('/api/me', { credentials: 'include' });
+        if (userRes.ok) {
+          const userData = await userRes.json();
+          setUserName(userData.email);
+        }
+
+        // Fetch commissions
+        const commRes = await fetch('/api/commissions', { credentials: 'include' });
+        if (!commRes.ok) throw new Error('Failed to load commissions');
+        const commData = await commRes.json();
+        setCommissions(commData);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load dashboard data');
+      } finally {
+        setLoading(false);
       }
     }
 
-    // initial load
-    reloadFromStorage();
-
-    // respond to simulated server pushes
-    window.addEventListener('commissions:updated', reloadFromStorage);
-    return () => {
-      window.removeEventListener('commissions:updated', reloadFromStorage);
-    };
+    loadData();
   }, []);
 
-  useEffect(() => {
-    try {
-      // persist in actual oldest-first order
-      const toSave = commissions.slice().reverse();
-      localStorage.setItem('commissions', JSON.stringify(toSave));
-    } catch (e) {
-      console.error('Failed to save commissions', e);
-    }
-  }, [commissions]);
-
-  function isAuth() {
-    return !!localStorage.getItem('authToken');
+  if (loading) {
+    return <main><section><h2>Loading dashboard...</h2></section></main>;
   }
 
-  function handleRequestCommission() {
-    navigate(isAuth() ? '/commission' : '/login');
+  if (error) {
+    return <main><section><h2>Error</h2><p className="error">{error}</p></section></main>;
   }
 
-  function handleDraftChange(id, value) {
-    setDrafts(prev => ({ ...prev, [id]: value }));
+  const activeCommissions = commissions.filter(c => c.status !== 'completed');
+  const completedCommissions = commissions.filter(c => c.status === 'completed');
+
+  function handleDraftChange(commissionId, value) {
+    setDrafts(prev => ({ ...prev, [commissionId]: value }));
   }
 
-  function handleSendMessage(e, id) {
-    e.preventDefault();
-    const text = (drafts[id] || '').trim();
+  async function sendMessage(commissionId) {
+    const text = drafts[commissionId]?.trim();
     if (!text) return;
-    setCommissions(prev => {
-      const updated = prev.map(c => {
-        if (c.id === id) {
-          const msgs = c.messages ? [...c.messages] : [];
-          msgs.push({
-            from: 'You',
-            text,
-            at: new Date().toISOString()
-          });
-          return { ...c, messages: msgs };
+
+    try {
+      const res = await fetch(`/api/commissions/${commissionId}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ text }),
+      });
+
+      if (!res.ok) throw new Error('Failed to send message');
+
+      const newMsg = await res.json();
+
+      // Update local state
+      setCommissions(prev => prev.map(c => {
+        if (c.id === commissionId) {
+          return { ...c, messages: [...(c.messages || []), newMsg] };
         }
         return c;
-      });
-      return updated;
-    });
-    setDrafts(prev => ({ ...prev, [id]: '' }));
+      }));
+      setDrafts(prev => ({ ...prev, [commissionId]: '' }));
+    } catch (err) {
+      console.error('Send message failed', err);
+      alert('Failed to send message. Please try again.');
+    }
   }
 
   function formatDate(iso) {
@@ -96,8 +101,8 @@ export function Dashboard() {
 
       <section>
         <h2>Active Commissions</h2>
-        {commissions.filter(c => c.status !== 'completed').length === 0 && <p>No active commissions.</p>}
-        {commissions.filter(c => c.status !== 'completed').map(c => (
+        {activeCommissions.length === 0 && <p>No active commissions.</p>}
+        {activeCommissions.map(c => (
           <article key={c.id} className="commission-card">
             <h3>{c.form?.commissionTitle || 'Untitled Commission'}</h3>
             <div className="commission-meta">
@@ -127,7 +132,7 @@ export function Dashboard() {
                 </div>
               ))}
 
-              <form onSubmit={(e) => handleSendMessage(e, c.id)}>
+              <form onSubmit={(e) => { e.preventDefault(); sendMessage(c.id); }}>
                 <label htmlFor={`msg-${c.id}`}>Send Message:</label><br />
                 <textarea
                   id={`msg-${c.id}`}
@@ -149,8 +154,8 @@ export function Dashboard() {
 
       <section>
         <h2>Completed Commissions</h2>
-        {commissions.filter(c => c.status === 'completed').length === 0 && <p>No completed commissions yet.</p>}
-        {commissions.filter(c => c.status === 'completed').map(c => (
+        {completedCommissions.length === 0 && <p>No completed commissions yet.</p>}
+        {completedCommissions.map(c => (
           <article key={c.id} className="commission-card">
             <h3>{c.form?.commissionTitle || 'Completed Commission'}</h3>
             <p><strong>Completed:</strong> {formatDate(c.completedAt || c.createdAt)}</p>
@@ -165,8 +170,8 @@ export function Dashboard() {
       <section>
         <h2>Account Summary</h2>
         <p><strong>Total Commissions:</strong> {commissions.length}</p>
-        <p><strong>Active Orders:</strong> {commissions.filter(c => c.status !== 'completed').length}</p>
-        <p><strong>Completed Orders:</strong> {commissions.filter(c => c.status === 'completed').length}</p>
+        <p><strong>Active Orders:</strong> {activeCommissions.length}</p>
+        <p><strong>Completed Orders:</strong> {completedCommissions.length}</p>
       </section>
     </main>
   );
