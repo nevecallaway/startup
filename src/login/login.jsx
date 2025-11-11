@@ -11,6 +11,7 @@ export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [reg, setReg] = useState({
     firstName: '',
@@ -31,13 +32,26 @@ export function Login() {
       return;
     }
 
+    setLoading(true);
     try {
-      const fakeToken = `demo-token:${btoa(email)}`;
-      localStorage.setItem('authToken', fakeToken);
-      localStorage.setItem('userEmail', email);
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // send/receive cookies
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.msg || 'Login failed');
+      }
+
+      const data = await res.json();
       navigate('/commission');
     } catch (err) {
-      setError('Login failed');
+      setError(err.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -54,13 +68,27 @@ export function Login() {
       return;
     }
 
+    setLoading(true);
     try {
-      const fakeToken = `demo-token:${btoa(reg.email)}`;
-      localStorage.setItem('authToken', fakeToken);
-      localStorage.setItem('userEmail', reg.email);
+      const res = await fetch('/api/auth/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: reg.email, password: reg.password }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.msg || 'Registration failed');
+      }
+
+      const data = await res.json();
+      localStorage.setItem('userEmail', data.email);
       navigate('/commission');
     } catch (err) {
-      setError('Registration failed');
+      setError(err.message || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   }
 

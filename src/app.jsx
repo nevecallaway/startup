@@ -4,6 +4,7 @@ import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './home/home';
 import { Login } from './login/login';
+import { Logout } from './login/logout';
 import { Gallery } from './gallery/gallery';
 import { Dashboard } from './dashboard/dashboard';
 import { About } from './about/about';
@@ -41,6 +42,9 @@ export default function App() {
               <li className="nav-item">
                   <NavLink className='nav-link' to='dashboard'>Dashboard</NavLink>
               </li>
+              <li className="nav-item">
+                  <NavLink className='nav-link' to='logout'>Logout</NavLink>
+              </li>
             </menu>
           </nav>
         </header>
@@ -48,6 +52,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Home />} exact />
           <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout />} />
           <Route path='/gallery' element={<Gallery />} />
           <Route path='/about' element={<About />} />
           <Route path='/commission' element={<Commission />} />
