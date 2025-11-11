@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function Logout() {
+export function Logout({ onLogout }) {
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -10,6 +10,7 @@ export function Logout() {
       try {
         const authRes = await fetch('/api/me', { credentials: 'include' });
         if (!authRes.ok) {
+          if (onLogout) onLogout(null);
           navigate('/login');
           return;
         }
@@ -23,6 +24,7 @@ export function Logout() {
           throw new Error('Logout failed');
         }
 
+        if (onLogout) onLogout(null);
         navigate('/login');
       } catch (err) {
         setError('Failed to logout. Please try again.');
@@ -31,7 +33,7 @@ export function Logout() {
     }
 
     logout();
-  }, [navigate]);
+  }, [navigate, onLogout]);
 
   return (
     <main>

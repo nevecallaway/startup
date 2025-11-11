@@ -5,10 +5,7 @@ import { simulateProgress } from '../simulateServer';
 
 export function Commission() {
   const navigate = useNavigate();
-  const toDashboard = () => {
-    const isAuth = !!localStorage.getItem('authToken');
-    navigate(isAuth ? '/dashboard' : '/login');
-  };
+  const toDashboard = () => navigate('/dashboard');
 
   const [form, setForm] = useState({
     subjectCount: '',
@@ -28,6 +25,7 @@ export function Commission() {
   const [palette, setPalette] = useState(['#E8B4B8','#D4A574','#9CAF88','#7FB3D3','#C8A2C8']);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [loadingPalette, setLoadingPalette] = useState(false);
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -42,14 +40,26 @@ export function Commission() {
     setFiles(list);
   }
 
-  function randomColor() {
-    return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+  // Fetch palette from backend (proxies third-party API)
+  async function randomPalette() {
+    setLoadingPalette(true);
+    try {
+      const res = await fetch('/api/palette', { credentials: 'include' });
+      if (!res.ok) throw new Error('Failed to fetch palette');
+      const data = await res.json();
+      const p = data.palette || palette;
+      setPalette(p);
+      setForm(prev => ({ ...prev, selectedPalette: p.join(',') }));
+    } catch (err) {
+      console.warn('Palette fetch failed, using fallback', err);
+      const fallback = Array.from({length:5}, () => '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0'));
+      setPalette(fallback);
+      setForm(prev => ({ ...prev, selectedPalette: fallback.join(',') }));
+    } finally {
+      setLoadingPalette(false);
+    }
   }
-  function randomPalette() {
-    const p = Array.from({length:5}, () => randomColor());
-    setPalette(p);
-    setForm(prev => ({ ...prev, selectedPalette: p.join(',') }));
-  }
+
   function warmPalette() {
     const p = ['#FFB4A2','#FF7F50','#D96C3B','#C85A3B','#8B2D2D'];
     setPalette(p);
@@ -85,26 +95,36 @@ export function Commission() {
 
     setSaving(true);
     try {
-      const commissions = JSON.parse(localStorage.getItem('commissions') || '[]');
-      const owner = localStorage.getItem('userEmail') || 'guest';
-      const id = Date.now();
-      const savedFiles = files.map(f => ({ name: f.name, size: f.size, type: f.type }));
-      const newCommission = {
-        id,
-        owner,
-        createdAt: new Date().toISOString(),
-        form: { ...form },
-        files: savedFiles,
-        status: 'submitted',
-        progress: {}
-      };
-      commissions.push(newCommission);
-      localStorage.setItem('commissions', JSON.stringify(commissions));
+     const payload = {
+       commissionTitle: form.commissionTitle,
+       storyDescription: form.storyDescription,
+       subjectCount: form.subjectCount,
+       orientation: form.orientation,
+       sizeRatio: form.sizeRatio,
+       photoNotes: form.photoNotes,
+       specificRequests: form.specificRequests,
+       colorNotes: form.colorNotes,
+       selectedPalette: form.selectedPalette,
+       termsAgreement: form.termsAgreement,
+       communicationAgreement: form.communicationAgreement,
+       files: files.map(f => ({ name: f.name, size: f.size, type: f.type }))
+     };
 
-      // start simulated server-side progress updates
-      simulateProgress(id);
+     const res = await fetch('/api/commissions', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       credentials: 'include',
+       body: JSON.stringify(payload),
+     });
 
-      toDashboard();
+     if (!res.ok) {
+       const errData = await res.json().catch(() => ({}));
+       throw new Error(errData.msg || `Create commission failed (${res.status})`);
+     }
+
+     const created = await res.json();
+
+     toDashboard();
     } catch (err) {
       setError('Failed to save commission. Try again.');
       console.error(err);

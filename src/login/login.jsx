@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 
-export function Login() {
+export function Login({ onLogin }) {
   const navigate = useNavigate();
 
   const toAbout = () => navigate('/about');
@@ -22,7 +22,6 @@ export function Login() {
     phone: ''
   });
 
-  // Placeholder login: store fake token in LocalStorage
   async function handleLogin(e) {
     e.preventDefault();
     setError('');
@@ -37,7 +36,7 @@ export function Login() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // send/receive cookies
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
@@ -47,6 +46,7 @@ export function Login() {
       }
 
       const data = await res.json();
+      if (onLogin) onLogin(data);
       navigate('/commission');
     } catch (err) {
       setError(err.message || 'Login failed');
@@ -83,7 +83,7 @@ export function Login() {
       }
 
       const data = await res.json();
-      localStorage.setItem('userEmail', data.email);
+      if (onLogin) onLogin(data);
       navigate('/commission');
     } catch (err) {
       setError(err.message || 'Registration failed');
