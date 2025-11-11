@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './commission.css';
-import { simulateProgress } from '../simulateServer';
 
 export function Commission() {
   const navigate = useNavigate();

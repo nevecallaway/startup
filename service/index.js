@@ -119,6 +119,34 @@ apiRouter.post('/commissions/:id/messages', verifyAuth, (req, res) => {
   res.status(201).send(msg);
 });
 
+// Third-party palette endpoint (Colormind.io API)
+apiRouter.get('/palette', async (_req, res) => {
+  try {
+    // Call Colormind.io API (free, no API key needed)
+    const response = await fetch('http://colormind.io/api/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'default' })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Colormind API returned ${response.status}`);
+    }
+    
+    const data = await response.json();
+    // Colormind returns: { result: [[r,g,b], [r,g,b], [r,g,b], [r,g,b], [r,g,b]] }
+    // Need to convert RGB arrays to hex color strings
+    const palette = data.result.map(rgb => 
+      '#' + rgb.map(v => v.toString(16).padStart(2, '0')).join('')
+    );
+    
+    res.send({ palette });
+  } catch (err) {
+    console.error('Palette fetch failed:', err);
+    res.status(502).send({ msg: 'Failed to fetch palette from third-party API', error: err.message });
+  }
+});
+
 // Helper functions
 async function findUser(field, value) {
   if (!value) return null;
