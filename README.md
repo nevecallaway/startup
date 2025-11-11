@@ -150,12 +150,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Created backend service in `service/index.js` with Express on port 4000. Implemented authentication (bcrypt password hashing, cookie-based sessions), commission management endpoints, and message endpoints.
+- [x] **Static middleware for frontend** - Configured `app.use(express.static('public'))` to serve built React app from the `public` directory when deployed. Vite proxy (`vite.config.js`) forwards `/api` requests to backend during development.
+- [x] **Calls to third party endpoints** - Integrated Colormind.io color palette API via backend proxy endpoint (`/api/palette`) to fetch random color palettes for commission requests, replacing the previous client-side random color generator.
+- [x] **Backend service endpoints** - Implemented RESTful endpoints: `POST /api/auth/create` (register), `POST /api/auth/login`, `DELETE /api/auth/logout`, `GET /api/me` (auth check), `POST /api/commissions` (create), `GET /api/commissions` (list user's commissions), `POST /api/commissions/:id/messages` (send message), and `GET /api/palette` (fetch third-party color palette).
+- [x] **Frontend calls service endpoints** - Updated Login, Commission, and Dashboard components to use `fetch()` with `credentials: 'include'` for authenticated requests. Replaced all localStorage auth/data mocking with real backend calls.
+- [x] **Supports registration, login, logout, and restricted endpoint** - Implemented `verifyAuth` middleware to protect routes. Users must authenticate to access commission creation, dashboard, and messaging endpoints. Auth state managed via httpOnly cookies and conditional rendering in React (protected routes redirect unauthenticated users to login).
 
 
 ## 🚀 DB deliverable
