@@ -274,3 +274,6 @@ Promise.resolve(2).then(x=>x*2).then(x=>x+1).then(console.log) // → 5
 ```
 ## Service
 - I learned that you need to make sure simon is deployed with an index.js script that specifies listening on a different port from startup.
+
+## DB
+- Successfully deployed simon-db to production environment
