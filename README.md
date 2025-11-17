@@ -162,8 +162,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+- [x] **Stores data in MongoDB** - Created `database.js` module with MongoDB client connection to Atlas cluster. Implemented `commissionCollection` to store all commission data (title, description, specifications, color palette, files, messages, status, progress) with persistent storage. Commission creation, retrieval, and message appending now use MongoDB instead of in-memory arrays.
+- [x] **Stores credentials in MongoDB** - Implemented `userCollection` to store user authentication data. User registration creates documents with email, bcrypt-hashed password, optional firstName, and session token. Login verification queries MongoDB for user credentials, and token-based auth middleware (`verifyAuth`) validates sessions by looking up tokens in the database. All user data persists across server restarts.
+
 
 ## 🚀 WebSocket deliverable
 
