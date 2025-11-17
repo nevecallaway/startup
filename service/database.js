@@ -19,3 +19,31 @@ const commissionCollection = db.collection('commission');
     process.exit(1);
   }
 })();
+
+// User functions
+async function getUser(email) {
+  return await userCollection.findOne({ email });
+}
+
+async function getUserByToken(token) {
+  return await userCollection.findOne({ token });
+}
+
+async function createUser(email, password) {
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = {
+    email,
+    password: passwordHash,
+    token: uuid.v4(),
+  };
+  await userCollection.insertOne(user);
+  return user;
+}
+
+async function updateUserToken(email, token) {
+  await userCollection.updateOne({ email }, { $set: { token } });
+}
+
+async function clearUserToken(token) {
+  await userCollection.updateOne({ token }, { $unset: { token: '' } });
+}
