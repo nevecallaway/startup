@@ -47,3 +47,37 @@ async function updateUserToken(email, token) {
 async function clearUserToken(token) {
   await userCollection.updateOne({ token }, { $unset: { token: '' } });
 }
+
+// Commission functions
+async function addCommission(commission) {
+  const result = await commissionCollection.insertOne(commission);
+  return { ...commission, _id: result.insertedId };
+}
+
+async function getCommissions(email) {
+  const cursor = commissionCollection.find({ owner: email });
+  return await cursor.toArray();
+}
+
+async function getCommissionById(id, owner) {
+  return await commissionCollection.findOne({ id, owner });
+}
+
+async function addMessageToCommission(id, owner, message) {
+  await commissionCollection.updateOne(
+    { id, owner },
+    { $push: { messages: message } }
+  );
+}
+
+module.exports = {
+  getUser,
+  getUserByToken,
+  createUser,
+  updateUserToken,
+  clearUserToken,
+  addCommission,
+  getCommissions,
+  getCommissionById,
+  addMessageToCommission,
+};
