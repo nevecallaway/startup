@@ -73,7 +73,7 @@ apiRouter.get('/me', verifyAuth, (req, res) => {
 });
 
 // Create a commission
-apiRouter.post('/commissions', verifyAuth, (req, res) => {
+apiRouter.post('/commissions', verifyAuth, async (req, res) => {
   const id = Date.now();
   const commission = {
     id,
@@ -95,23 +95,23 @@ apiRouter.post('/commissions', verifyAuth, (req, res) => {
     files: (req.body.files || []).map(f => ({ name: f.name, size: f.size, type: f.type })),
     messages: []
   };
-  commissions.push(commission);
-  res.status(201).send(commission);
+  const savedCommission = await DB.addCommission(commission);
+  res.status(201).send(savedCommission);
 });
 
 // List commissions for current user
-apiRouter.get('/commissions', verifyAuth, (req, res) => {
-  const mine = commissions.filter(c => c.owner === req.user.email);
+apiRouter.get('/commissions', verifyAuth, async (req, res) => {
+  const mine = await DB.getCommissionsByOwner(req.user.email);
   res.send(mine);
 });
 
 // Append message to commission
-apiRouter.post('/commissions/:id/messages', verifyAuth, (req, res) => {
+apiRouter.post('/commissions/:id/messages', verifyAuth, async (req, res) => {
   const id = Number(req.params.id);
-  const c = commissions.find(x => x.id === id && x.owner === req.user.email);
+  const c = await DB.getCommissionById(id, req.user.email);
   if (!c) return res.status(404).send({ msg: 'Not found' });
   const msg = { id: uuid.v4(), from: req.user.email, text: req.body.text || '', createdAt: new Date().toISOString() };
-  c.messages.push(msg);
+  await DB.addMessageToCommission(id, req.user.email, msg);
   res.status(201).send(msg);
 });
 
@@ -144,24 +144,6 @@ apiRouter.get('/palette', async (_req, res) => {
 });
 
 // Helper functions
-async function findUser(field, value) {
-  if (!value) return null;
-
-  return users.find((u) => u[field] === value);
-}
-
-async function createUser(email, password) {
-  const passwordHash = await bcrypt.hash(password, 10);
-
-  const user = {
-    email: email,
-    password: passwordHash,
-    token: uuid.v4(),
-  };
-  users.push(user);
-
-  return user;
-}
 
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
