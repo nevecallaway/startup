@@ -4,18 +4,20 @@ const uuid = require('uuid');
 const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+console.log('Connecting to MongoDB at:', config.hostname);
 const client = new MongoClient(url);
 const db = client.db('portraitportal');
 const userCollection = db.collection('user');
 const commissionCollection = db.collection('commission');
 
-// This will asynchronously test the connection and exit the process if it fails
+// Test connection
 (async function testConnection() {
   try {
+    await client.connect();
     await db.command({ ping: 1 });
-    console.log(`Connect to database`);
+    console.log('✓ Connected to MongoDB successfully');
   } catch (ex) {
-    console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+    console.error('✗ MongoDB connection failed:', ex.message);
     process.exit(1);
   }
 })();
