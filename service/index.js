@@ -101,7 +101,7 @@ apiRouter.post('/commissions', verifyAuth, async (req, res) => {
 
 // List commissions for current user
 apiRouter.get('/commissions', verifyAuth, async (req, res) => {
-  const mine = await DB.getCommissionsByOwner(req.user.email);
+  const mine = await DB.getCommissions(req.user.email);
   res.send(mine);
 });
 

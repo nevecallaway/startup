@@ -51,7 +51,8 @@ async function clearUserToken(token) {
 // Commission functions
 async function addCommission(commission) {
   const result = await commissionCollection.insertOne(commission);
-  return { ...commission, _id: result.insertedId };
+  // Return with MongoDB _id but keep original id field
+  return commission;
 }
 
 async function getCommissions(email) {
