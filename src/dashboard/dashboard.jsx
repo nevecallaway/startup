@@ -128,7 +128,7 @@ export function Dashboard() {
               <h4>Recent Messages</h4>
               {(c.messages || []).slice(-5).map((m, i) => (
                 <div key={i} className="message-row">
-                  <p><strong>{m.from} ({formatDate(m.at)}):</strong> {m.text}</p>
+                  <p><strong>{m.from} ({formatDate(m.createdAt)}):</strong> {m.text}</p>
                 </div>
               ))}
 
