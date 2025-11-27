@@ -288,3 +288,6 @@ Promise.resolve(2).then(x=>x*2).then(x=>x+1).then(console.log) // → 5
 - Integrated Colormind.io color palette API via backend proxy endpoint
 - Transformed RGB arrays to hex color strings for frontend
 - Handled CORS by proxying through Express backend
+
+## Deployed Simon Websocket
+- Not quite sure how to run VSCode debugger, going to watch video again
