@@ -74,7 +74,13 @@ export function Login({ onLogin }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ email: reg.email, password: reg.password }),
+        body: JSON.stringify({
+          email: reg.email,
+          password: reg.password,
+          firstName: reg.firstName,
+          lastName: reg.lastName,
+          phone: reg.phone
+        }),
       });
 
       if (!res.ok) {
