@@ -4,14 +4,12 @@ const uuid = require('uuid');
 const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
-console.log('Connecting to MongoDB at:', config.hostname);
 const client = new MongoClient(url);
 const db = client.db('portraitportal');
 const userCollection = db.collection('user');
 const commissionCollection = db.collection('commission');
 
-// Test connection
-(async function testConnection() {
+(async function connect() {
   try {
     await client.connect();
     await db.command({ ping: 1 });
@@ -22,24 +20,27 @@ const commissionCollection = db.collection('commission');
   }
 })();
 
-// User functions
+// Users
 async function getUser(email) {
+  if (!email) return null;
   return await userCollection.findOne({ email });
 }
 
 async function getUserByToken(token) {
+  if (!token) return null;
   return await userCollection.findOne({ token });
 }
 
-async function createUser(email, password) {
+async function createUser(email, password, firstName = '') {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = {
     email,
     password: passwordHash,
+    firstName,
     token: uuid.v4(),
   };
   await userCollection.insertOne(user);
-  return user;
+  return { email: user.email, firstName: user.firstName, token: user.token };
 }
 
 async function updateUserToken(email, token) {
@@ -50,27 +51,22 @@ async function clearUserToken(token) {
   await userCollection.updateOne({ token }, { $unset: { token: '' } });
 }
 
-// Commission functions
+// Commissions
 async function addCommission(commission) {
-  const result = await commissionCollection.insertOne(commission);
-  // Return with MongoDB _id but keep original id field
+  await commissionCollection.insertOne(commission);
   return commission;
 }
 
 async function getCommissions(email) {
-  const cursor = commissionCollection.find({ owner: email });
-  return await cursor.toArray();
+  return await commissionCollection.find({ owner: email }).toArray();
 }
 
-async function getCommissionById(id, owner) {
-  return await commissionCollection.findOne({ id, owner });
+async function getCommissionById(id) {
+  return await commissionCollection.findOne({ id });
 }
 
 async function addMessageToCommission(id, owner, message) {
-  await commissionCollection.updateOne(
-    { id, owner },
-    { $push: { messages: message } }
-  );
+  await commissionCollection.updateOne({ id, owner }, { $push: { messages: message } });
 }
 
 module.exports = {

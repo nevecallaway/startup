@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './dashboard.css';
 
 export function Dashboard() {
-  const [userName, setUserName] = useState('User');
+  const [firstName, setFirstName] = useState('User');
   const [commissions, setCommissions] = useState([]);
   const [drafts, setDrafts] = useState({});
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ export function Dashboard() {
         const userRes = await fetch('/api/me', { credentials: 'include' });
         if (userRes.ok) {
           const userData = await userRes.json();
-          setUserName(userData.email);
+          setFirstName(userData.firstName || userData.email);
         }
 
         // Fetch commissions
@@ -127,7 +127,7 @@ export function Dashboard() {
   return (
     <main className="dashboard-main">
       <section>
-        <h2>Welcome back, {userName}!</h2>
+        <h2>Welcome back, {firstName}!</h2>
         <p>Manage your portrait commissions and track progress from your dashboard.</p>
       </section>
 

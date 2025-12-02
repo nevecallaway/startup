@@ -27,10 +27,10 @@ apiRouter.post('/auth/create', async (req, res) => {
   if (await DB.getUser(req.body.email)) {
     res.status(409).send({ msg: 'Existing user' });
   } else {
-    const user = await DB.createUser(req.body.email, req.body.password);
-
+    // pass firstName if provided
+    const user = await DB.createUser(req.body.email, req.body.password, req.body.firstName || '');
     setAuthCookie(res, user.token);
-    res.send({ email: user.email });
+    res.send({ email: user.email, firstName: user.firstName });
   }
 });
 
@@ -42,7 +42,7 @@ apiRouter.post('/auth/login', async (req, res) => {
       const token = uuid.v4();
       await DB.updateUserToken(user.email, token);
       setAuthCookie(res, token);
-      res.send({ email: user.email });
+      res.send({ email: user.email, firstName: user.firstName });
       return;
     }
   }
@@ -70,7 +70,7 @@ const verifyAuth = async (req, res, next) => {
 // PROTECTED ROUTES BELOW
 // Return current user
 apiRouter.get('/me', verifyAuth, (req, res) => {
-  res.send({ email: req.user.email });
+  res.send({ email: req.user.email, firstName: req.user.firstName || '' });
 });
 
 // Create a commission
