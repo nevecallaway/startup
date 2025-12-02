@@ -116,6 +116,23 @@ apiRouter.post('/commissions/:id/messages', verifyAuth, async (req, res) => {
   res.status(201).send(msg);
 });
 
+// Update commission progress
+apiRouter.patch('/commissions/:id/progress', verifyAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  const commission = await DB.getCommissionById(id);
+  if (!commission) return res.status(404).send({ msg: 'Not found' });
+
+  // allow update by owner or assigned artist
+  const userEmail = req.user.email;
+  if (commission.owner !== userEmail && commission.artist !== userEmail) {
+    return res.status(403).send({ msg: 'Forbidden' });
+  }
+
+  const progress = req.body.progress || {};
+  const updated = await DB.updateCommissionProgress(id, progress);
+  res.send(updated);
+});
+
 // Third-party palette endpoint (Colormind.io API)
 apiRouter.get('/palette', async (_req, res) => {
   try {

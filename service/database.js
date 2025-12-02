@@ -69,6 +69,15 @@ async function addMessageToCommission(id, owner, message) {
   await commissionCollection.updateOne({ id, owner }, { $push: { messages: message } });
 }
 
+async function updateCommissionProgress(id, progress) {
+  // merge provided keys into existing progress object
+  await commissionCollection.updateOne(
+    { id },
+    { $set: Object.fromEntries(Object.entries(progress).map(([k,v]) => [`progress.${k}`, v])) }
+  );
+  return commissionCollection.findOne({ id });
+}
+
 module.exports = {
   getUser,
   getUserByToken,
@@ -79,4 +88,5 @@ module.exports = {
   getCommissions,
   getCommissionById,
   addMessageToCommission,
+  updateCommissionProgress,
 };
