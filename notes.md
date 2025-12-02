@@ -301,3 +301,5 @@ Quick verification steps
 Notes / caveats
 - Current WebSocket implementation (peerProxy) broadcasts messages to other connected clients and relies on the REST endpoint for persistence and auth. This provides a simple, reliable MVP flow: REST for authoritative writes; WS for notifications/real-time updates.
 - Ensure vite.config.js contains a `/ws` proxy with `ws: true` during development and that your production reverse proxy (Caddy) forwards WebSocket upgrades to the backend.
+
+Successfully deployed.
