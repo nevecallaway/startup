@@ -291,3 +291,13 @@ Promise.resolve(2).then(x=>x*2).then(x=>x+1).then(console.log) // → 5
 
 ## Deployed Simon Websocket
 - Not quite sure how to run VSCode debugger, going to watch video again
+
+## Websocket
+Quick verification steps
+- Start backend: `node service/index.js 4000`
+- Start frontend (dev): `npm run dev`
+- Open two browser tabs to the dashboard, open the same commission, send a message from tab A → tab B should receive it immediately and the message should be saved in MongoDB.
+
+Notes / caveats
+- Current WebSocket implementation (peerProxy) broadcasts messages to other connected clients and relies on the REST endpoint for persistence and auth. This provides a simple, reliable MVP flow: REST for authoritative writes; WS for notifications/real-time updates.
+- Ensure vite.config.js contains a `/ws` proxy with `ws: true` during development and that your production reverse proxy (Caddy) forwards WebSocket upgrades to the backend.

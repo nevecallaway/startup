@@ -170,8 +170,13 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - Implemented a lightweight WebSocket server (service/peerProxy.js) and attached it to the HTTP server in service/index.js. The server accepts connections on /ws and broadcasts messages to other connected clients.
+
+- [x] **Frontend makes WebSocket connection** - The dashboard client (src/dashboard/dashboard.jsx) opens a WebSocket to /ws (proxied in vite.config.js during development) and logs connection state. Connections show "WS open" in the browser console.
+
+- [x] **Data sent over WebSocket connection** - Messages are sent as JSON. The client persists messages via REST (POST /api/commissions/:id/messages) and then broadcasts the persisted message over the WebSocket so other connected clients receive it in real time.
+
+- [x] **WebSocket data displayed in the application interface** - Incoming WebSocket messages are merged into dashboard state and rendered in the commission conversation view so customer and artist see messages instantly. The message createdAt timestamp is shown with a formatted local date/time.
+
+- [x] **Application is fully functional (no mocks)** - Messaging is backed by MongoDB persistence (service/database.js). WebSocket pushes are used for live updates while REST endpoints handle durable storage and auth. Vite dev server proxies /ws and /api to the backend for local testing.
+
