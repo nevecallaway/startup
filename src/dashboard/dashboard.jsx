@@ -59,6 +59,20 @@ export function Dashboard() {
 
     return () => { try { ws.close(); } catch(_) {} };
   }, []);
+  
+  // subscribe to commissions on the websocket whenever the commissions list updates
+  useEffect(() => {
+    const ws = wsRef.current;
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    commissions.forEach(c => {
+      if (c && c.id) wsSend({ type: 'subscribe', commissionId: c.id });
+    });
+  }, [commissions]);
+  
+  // simple navigation helper used by buttons in this component
+  function handleRequestCommission() {
+    window.location.href = '/commission';
+  }
 
   function wsSend(obj) {
     const ws = wsRef.current;
@@ -95,16 +109,11 @@ export function Dashboard() {
       if (!res.ok) throw new Error('Failed to send message');
 
       const newMsg = await res.json();
-
-      // Update local state
-      setCommissions(prev => prev.map(c => {
-        if (c.id === commissionId) {
-          return { ...c, messages: [...(c.messages || []), newMsg] };
-        }
-        return c;
-      }));
+      // update local UI
+      setCommissions(prev => prev.map(c => c.id === commissionId ? { ...c, messages: [...(c.messages||[]), newMsg] } : c));
       setDrafts(prev => ({ ...prev, [commissionId]: '' }));
-      wsSend({ type: 'message', commissionId: commissionId, message: newMsg });
+      // broadcast persisted message to other clients subscribed to this commission
+      wsSend({ type: 'message', commissionId, message: newMsg });
     } catch (err) {
       console.error('Send message failed', err);
       alert('Failed to send message. Please try again.');
