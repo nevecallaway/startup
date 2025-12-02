@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './dashboard.css';
 
 export function Dashboard() {
@@ -7,6 +7,7 @@ export function Dashboard() {
   const [drafts, setDrafts] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const wsRef = useRef(null);
 
   useEffect(() => {
     async function loadData() {
@@ -33,6 +34,36 @@ export function Dashboard() {
 
     loadData();
   }, []);
+
+  useEffect(() => {
+    const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+    const wsUrl = `${proto}://${location.host}/ws`;
+    const ws = new WebSocket(wsUrl);
+    wsRef.current = ws;
+
+    ws.addEventListener('open', () => console.debug('WS open'));
+    ws.addEventListener('message', async (ev) => {
+      const raw = typeof ev.data === 'string' ? ev.data : await ev.data.text();
+      try {
+        const data = JSON.parse(raw);
+        if (data.type === 'message') {
+          const { commissionId, message } = data;
+          setCommissions(prev => prev.map(c => c.id === commissionId ? { ...c, messages: [...(c.messages||[]), message] } : c));
+        }
+      } catch {
+        console.debug('WS raw', raw);
+      }
+    });
+    ws.addEventListener('close', () => console.debug('WS closed'));
+    ws.addEventListener('error', (e) => console.error('WS error', e));
+
+    return () => { try { ws.close(); } catch(_) {} };
+  }, []);
+
+  function wsSend(obj) {
+    const ws = wsRef.current;
+    if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(obj));
+  }
 
   if (loading) {
     return <main><section><h2>Loading dashboard...</h2></section></main>;
@@ -73,6 +104,7 @@ export function Dashboard() {
         return c;
       }));
       setDrafts(prev => ({ ...prev, [commissionId]: '' }));
+      wsSend({ type: 'message', commissionId: commissionId, message: newMsg });
     } catch (err) {
       console.error('Send message failed', err);
       alert('Failed to send message. Please try again.');
